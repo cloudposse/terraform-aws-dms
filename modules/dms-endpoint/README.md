@@ -1,6 +1,6 @@
 # dms-endpoint
 
-Terraform module to provision an DMS Endpoints.
+Terraform module to provision DMS Endpoints.
 
 ## Usage
 

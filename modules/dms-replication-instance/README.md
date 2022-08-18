@@ -1,6 +1,6 @@
 # dms-replication-instance
 
-Terraform module to provision an DMS Replication Instances.
+Terraform module to provision DMS Replication Instances.
 
 ## Usage
 

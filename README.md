@@ -36,6 +36,7 @@ The following DMS resources are supported:
   - [DMS Endpoints](modules/dms-endpoint)
   - [DMS Replication Instances](modules/dms-replication-instance)
   - [DMS Replication Tasks](modules/dms-replication-task)
+  - [DMS Event Subscriptions](modules/dms-event-subscription)
 
 Refer to [modules](modules) for more details.
 

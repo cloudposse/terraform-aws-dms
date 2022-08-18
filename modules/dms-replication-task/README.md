@@ -1,6 +1,6 @@
 # dms-replication-task
 
-Terraform module to provision an DMS Replication Tasks.
+Terraform module to provision DMS Replication Tasks.
 
 ## Usage
 
