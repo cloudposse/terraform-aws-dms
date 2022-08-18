@@ -34,13 +34,39 @@ resource "aws_dms_endpoint" "default" {
   dynamic "kafka_settings" {
     for_each = var.kafka_settings != null ? [true] : []
     content {
-      broker = ""
+      broker                         = var.kafka_settings.broker
+      include_control_details        = lookup(var.kafka_settings, "include_control_details", null)
+      include_null_and_empty         = lookup(var.kafka_settings, "include_null_and_empty", null)
+      include_partition_value        = lookup(var.kafka_settings, "include_partition_value", null)
+      include_table_alter_operations = lookup(var.kafka_settings, "include_table_alter_operations", null)
+      include_transaction_details    = lookup(var.kafka_settings, "include_transaction_details", null)
+      message_format                 = lookup(var.kafka_settings, "message_format", null)
+      message_max_bytes              = lookup(var.kafka_settings, "message_max_bytes", null)
+      no_hex_prefix                  = lookup(var.kafka_settings, "no_hex_prefix", null)
+      partition_include_schema_table = lookup(var.kafka_settings, "partition_include_schema_table", null)
+      sasl_password                  = lookup(var.kafka_settings, "sasl_password", null)
+      sasl_username                  = lookup(var.kafka_settings, "sasl_username", null)
+      security_protocol              = lookup(var.kafka_settings, "security_protocol", null)
+      ssl_ca_certificate_arn         = lookup(var.kafka_settings, "ssl_ca_certificate_arn", null)
+      ssl_client_certificate_arn     = lookup(var.kafka_settings, "ssl_client_certificate_arn", null)
+      ssl_client_key_arn             = lookup(var.kafka_settings, "ssl_client_key_arn", null)
+      ssl_client_key_password        = lookup(var.kafka_settings, "ssl_client_key_password", null)
+      topic                          = lookup(var.kafka_settings, "topic", null)
     }
   }
 
   dynamic "kinesis_settings" {
     for_each = var.kinesis_settings != null ? [true] : []
     content {
+      include_control_details        = lookup(var.kinesis_settings, "include_control_details", null)
+      include_null_and_empty         = lookup(var.kinesis_settings, "include_null_and_empty", null)
+      include_partition_value        = lookup(var.kinesis_settings, "include_partition_value", null)
+      include_table_alter_operations = lookup(var.kinesis_settings, "include_table_alter_operations", null)
+      include_transaction_details    = lookup(var.kinesis_settings, "include_transaction_details", null)
+      message_format                 = lookup(var.kinesis_settings, "message_format", null)
+      partition_include_schema_table = lookup(var.kinesis_settings, "partition_include_schema_table", null)
+      service_access_role_arn        = lookup(var.kinesis_settings, "service_access_role_arn", null)
+      stream_arn                     = lookup(var.kinesis_settings, "stream_arn", null)
     }
   }
 
