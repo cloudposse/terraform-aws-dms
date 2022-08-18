@@ -5,11 +5,24 @@ locals {
 resource "aws_dms_endpoint" "default" {
   count = local.enabled ? 1 : 0
 
-  endpoint_id   = module.this.id
-  endpoint_type = var.endpoint_type
+  endpoint_id                     = module.this.id
+  endpoint_type                   = var.endpoint_type
+  engine_name                     = var.engine_name
+  kms_key_arn                     = var.kms_key_arn
+  certificate_arn                 = var.certificate_arn
+  database_name                   = var.database_name
+  extra_connection_attributes     = var.extra_connection_attributes
+  port                            = var.port
+  server_name                     = var.server_name
+  username                        = var.username
+  password                        = var.password
+  secrets_manager_access_role_arn = var.secrets_manager_access_role_arn
+  secrets_manager_arn             = var.secrets_manager_arn
+  service_access_role             = var.service_access_role
+  ssl_mode                        = var.ssl_mode
 
   s3_settings {
-    bucket_name                      = local.bucket_name
+    bucket_name                      = var.bucket_name
     bucket_folder                    = var.target_bucket_folder
     compression_type                 = var.target_compression_type
     csv_delimiter                    = var.target_csv_delimiter
@@ -20,16 +33,6 @@ resource "aws_dms_endpoint" "default" {
     parquet_timestamp_in_millisecond = var.target_parquet_timestamp_in_millisecond
     service_access_role_arn          = var.service_access_role_arn
   }
-
-  server_name = var.server_name
-  username    = var.username
-  password    = var.password
-
-  engine_name                 = var.engine_name
-  database_name               = var.database_name
-  port                        = var.port
-  ssl_mode                    = var.ssl_mode
-  extra_connection_attributes = var.extra_connection_attributes
 
   tags = module.this.tags
 }
