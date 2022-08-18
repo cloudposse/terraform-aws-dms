@@ -1,0 +1,88 @@
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-dms
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Copyrights
+copyrights:
+  - name: "Cloud Posse, LLC"
+    url: "https://cloudposse.com"
+    year: "2022"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-dms
+
+# Badges to display
+badges:
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-dms.svg"
+    url: "https://github.com/cloudposse/terraform-aws-dms/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+  - name: "Discourse Forum"
+    image: "https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg"
+    url: "https://ask.sweetops.com/"
+
+# List any related terraform modules that this module may be used with or that this module depends on.
+related:
+  - name: "terraform-aws-components"
+    description: "Catalog of terraform AWS components"
+    url: "https://github.com/cloudposse/terraform-aws-components"
+
+references:
+  - name: AWS Database Migration Service
+    description: AWS Database Migration Service
+    url: https://aws.amazon.com/dms
+  - name: AWS Database Migration Service Documentation
+    description: AWS Database Migration Service Documentation
+    url: https://docs.aws.amazon.com/dms/index.html
+
+# Short description of this project
+description: |-
+  Terraform modules for provisioning and managing AWS [DMS](https://aws.amazon.com/dms/) resources. 
+  
+  The following DMS resources are supported:
+  
+    - [IAM Role for DMS](modules/dms-iam)
+    - [DMS Endpoints](modules/dms-endpoint)
+    - [DMS Replication Instances](modules/dms-replication-instance)
+    - [DMS Replication Tasks](modules/dms-replication-task)
+
+  Refer to [modules](modules) for more details.
+
+# How to use this module
+usage: |-
+
+  For a complete example, see [examples/complete](examples/complete).
+
+  For automated tests of the example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
+  (which tests and deploys the example on AWS), see [test](test).
+
+# Example usage
+examples: |-
+
+  ```hcl
+  
+  ```
+
+# Other files to include in this README from the project folder
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Erik Osterman"
+    github: "osterman"
+  - name: "Andriy Knysh"
+    github: "aknysh"
