@@ -79,3 +79,39 @@ variable "username" {
   description = "User name to be used to login to the endpoint database"
   default     = null
 }
+
+variable "elasticsearch_settings" {
+  type        = map(any)
+  description = "Configuration block for OpenSearch settings"
+  default     = null
+}
+
+variable "kafka_settings" {
+  type        = map(any)
+  description = "Configuration block for Kafka settings"
+  default     = null
+}
+
+variable "kinesis_settings" {
+  type        = map(any)
+  description = "Configuration block for Kinesis settings"
+  default     = null
+}
+
+variable "mongodb_settings" {
+  type        = map(any)
+  description = "Configuration block for MongoDB settings"
+  default     = null
+}
+
+variable "redshift_settings" {
+  type        = map(any)
+  description = "Configuration block for Redshift settings"
+  default     = null
+}
+
+variable "s3_settings" {
+  type        = map(any)
+  description = "Configuration block for S3 settings"
+  default     = null
+}
