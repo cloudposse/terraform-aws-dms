@@ -5,7 +5,8 @@ locals {
 resource "aws_dms_replication_instance" "default" {
   count = local.enabled ? 1 : 0
 
-  replication_instance_id      = module.this.id
+  replication_instance_id = module.this.id
+
   allocated_storage            = var.allocated_storage
   auto_minor_version_upgrade   = var.auto_minor_version_upgrade
   allow_major_version_upgrade  = var.allow_major_version_upgrade

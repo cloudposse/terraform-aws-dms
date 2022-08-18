@@ -34,7 +34,7 @@ resource "aws_dms_endpoint" "default" {
   dynamic "kafka_settings" {
     for_each = var.kafka_settings != null ? [true] : []
     content {
-      broker                         = var.kafka_settings.broker
+      broker                         = lookup(var.kafka_settings, "broker")
       include_control_details        = lookup(var.kafka_settings, "include_control_details", null)
       include_null_and_empty         = lookup(var.kafka_settings, "include_null_and_empty", null)
       include_partition_value        = lookup(var.kafka_settings, "include_partition_value", null)

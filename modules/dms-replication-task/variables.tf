@@ -1,11 +1,49 @@
 variable "start_replication_task" {
   type        = bool
-  default     = true
   description = "If set to `true`, the created replication tasks will be started automatically"
+  default     = true
 }
 
-variable "replication_task_migration_type" {
+variable "migration_type" {
   type        = string
-  default     = "full-load-and-cdc"
   description = "The migration type. Can be one of `full-load`, `cdc`, `full-load-and-cdc`"
+  default     = "full-load-and-cdc"
+}
+
+variable "cdc_start_position" {
+  type        = string
+  description = "Indicates when you want a change data capture (CDC) operation to start. The value can be in date, checkpoint, or LSN/SCN format depending on the source engine, Conflicts with `cdc_start_time`"
+  default     = null
+}
+
+variable "cdc_start_time" {
+  type        = string
+  description = "The Unix timestamp integer for the start of the Change Data Capture (CDC) operation. Conflicts with `cdc_start_position`"
+  default     = null
+}
+
+variable "replication_instance_arn" {
+  type        = string
+  description = "The Amazon Resource Name (ARN) of the replication instance"
+}
+
+variable "source_endpoint_arn" {
+  type        = string
+  description = "The Amazon Resource Name (ARN) string that uniquely identifies the source endpoint"
+}
+
+variable "target_endpoint_arn" {
+  type        = string
+  description = "The Amazon Resource Name (ARN) string that uniquely identifies the target endpoint"
+}
+
+variable "table_mappings" {
+  type        = string
+  description = "An escaped JSON string that contains the table mappings"
+}
+
+variable "replication_task_settings" {
+  type        = string
+  description = "An escaped JSON string that contains the task settings"
+  default     = null
 }
