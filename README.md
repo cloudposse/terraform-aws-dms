@@ -197,10 +197,11 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   }
   
   resource "aws_vpc_endpoint" "s3" {
-    vpc_id          = module.vpc.vpc_id
-    service_name    = "com.amazonaws.${var.region}.s3"
-    route_table_ids = module.subnets.private_route_table_ids
-    tags            = module.this.tags
+    vpc_endpoint_type = "Gateway"
+    vpc_id            = module.vpc.vpc_id
+    service_name      = "com.amazonaws.${var.region}.s3"
+    route_table_ids   = module.subnets.private_route_table_ids
+    tags              = module.this.tags
   }
 
   module "s3_bucket" {
