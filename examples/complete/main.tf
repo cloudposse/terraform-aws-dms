@@ -16,8 +16,10 @@ module "dms_replication_instance" {
   source = "../../modules/dms-replication-instance"
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html
-  engine_version               = "3.4.7"
-  replication_instance_class   = "dms.t2.small"
+  engine_version             = "3.4.7"
+  replication_instance_class = "dms.t2.small"
+
+  allocated_storage            = 50
   apply_immediately            = true
   auto_minor_version_upgrade   = true
   allow_major_version_upgrade  = false

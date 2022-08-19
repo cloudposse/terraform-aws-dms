@@ -127,7 +127,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   
     engine_version               = "3.4.7"
     replication_instance_class   = "dms.t2.micro"
-    allocated_storage            = 10
+    allocated_storage            = 50
     apply_immediately            = true
     auto_minor_version_upgrade   = true
     allow_major_version_upgrade  = false
