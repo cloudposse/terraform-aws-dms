@@ -4,88 +4,6 @@ locals {
   subnet_ids        = module.subnets.private_subnet_ids
 }
 
-module "vpc" {
-  source  = "cloudposse/vpc/aws"
-  version = "1.1.0"
-
-  ipv4_primary_cidr_block = "172.19.0.0/16"
-
-  context = module.this.context
-}
-
-module "subnets" {
-  source  = "cloudposse/dynamic-subnets/aws"
-  version = "2.0.2"
-
-  availability_zones   = var.availability_zones
-  vpc_id               = local.vpc_id
-  igw_id               = [module.vpc.igw_id]
-  ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
-  nat_gateway_enabled  = false
-  nat_instance_enabled = false
-
-  context = module.this.context
-}
-
-module "aurora_postgres_cluster" {
-  source  = "cloudposse/rds-cluster/aws"
-  version = "1.3.1"
-
-  engine                               = "aurora-postgresql"
-  engine_mode                          = "provisioned"
-  engine_version                       = "13.4"
-  cluster_family                       = "aurora-postgresql13"
-  cluster_size                         = 1
-  admin_user                           = var.admin_user
-  admin_password                       = var.admin_password
-  db_name                              = var.database_name
-  db_port                              = var.database_port
-  instance_type                        = "db.t3.medium"
-  vpc_id                               = local.vpc_id
-  subnets                              = local.subnet_ids
-  security_groups                      = [local.security_group_id]
-  storage_type                         = "gp2"
-  allocated_storage                    = 10
-  deletion_protection                  = false
-  autoscaling_enabled                  = false
-  storage_encrypted                    = false
-  intra_security_group_traffic_enabled = false
-  skip_final_snapshot                  = true
-  enhanced_monitoring_role_enabled     = false
-  iam_database_authentication_enabled  = false
-
-  context = module.this.context
-}
-
-module "s3_bucket" {
-  source  = "cloudposse/s3-bucket/aws"
-  version = "2.0.3"
-
-  acl                          = "private"
-  versioning_enabled           = false
-  force_destroy                = true
-  allow_encrypted_uploads_only = true
-  allow_ssl_requests_only      = true
-  block_public_acls            = true
-  block_public_policy          = true
-  ignore_public_acls           = true
-  restrict_public_buckets      = true
-
-  context = module.this.context
-}
-
-module "sns_topic" {
-  source  = "cloudposse/sns-topic/aws"
-  version = "0.20.1"
-
-  allowed_aws_services_for_sns_published = ["cloudwatch.amazonaws.com"]
-  sqs_dlq_enabled                        = false
-  fifo_topic                             = false
-  fifo_queue_enabled                     = false
-
-  context = module.this.context
-}
-
 module "dms_iam" {
   source = "../../modules/dms-iam"
 
@@ -142,6 +60,62 @@ module "dms_endpoint_aurora_postgres" {
   secrets_manager_access_role_arn = null
   secrets_manager_arn             = null
   ssl_mode                        = "none"
+
+  context = module.this.context
+}
+
+module "dms_endpoint_s3_bucket" {
+  source = "../../modules/dms-endpoint"
+
+  endpoint_type = "target"
+  engine_name   = "s3"
+
+  s3_settings = {
+    bucket_name                      = module.s3_bucket.bucket_id
+    bucket_folder                    = null
+    cdc_inserts_only                 = false
+    csv_row_delimiter                = " "
+    csv_delimiter                    = ","
+    data_format                      = "parquet"
+    compression_type                 = "GZIP"
+    date_partition_delimiter         = "NONE"
+    date_partition_enabled           = true
+    date_partition_sequence          = "YYYYMMDD"
+    include_op_for_full_load         = true
+    parquet_timestamp_in_millisecond = true
+    timestamp_column_name            = "timestamp"
+    service_access_role_arn          = aws_iam_role.s3.arn
+  }
+
+  extra_connection_attributes = ""
+
+  context = module.this.context
+}
+
+module "dms_replication_task" {
+  source = "../../modules/dms-replication-task"
+
+  replication_instance_arn = module.dms_replication_instance.replication_instance_arn
+  start_replication_task   = true
+  migration_type           = "full-load-and-cdc"
+  source_endpoint_arn      = module.dms_endpoint_aurora_postgres.endpoint_arn
+  target_endpoint_arn      = module.dms_endpoint_s3_bucket.endpoint_arn
+
+  # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html
+  replication_task_settings = file("${path.module}/config/replication-task-settings.json")
+  table_mappings            = file("${path.module}/config/replication-task-table-mappings.json")
+
+  context = module.this.context
+}
+
+module "dms_replication_task_event_subscription" {
+  source = "../../modules/dms-event-subscription"
+
+  event_subscription_enabled = true
+  event_categories           = ["creation", "failure"]
+  source_type                = "replication-task"
+  source_ids                 = [module.dms_replication_task.replication_task_id]
+  sns_topic_arn              = module.sns_topic.sns_topic_arn
 
   context = module.this.context
 }

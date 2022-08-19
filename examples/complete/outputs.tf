@@ -13,29 +13,29 @@ output "private_subnet_cidrs" {
   description = "Private subnet CIDR blocks"
 }
 
-output "database_name" {
+output "aurora_postgres_database_name" {
   value       = module.aurora_postgres_cluster.database_name
-  description = "Database name"
+  description = "Aurora Postgres database name"
 }
 
-output "cluster_identifier" {
+output "aurora_postgres_cluster_identifier" {
   value       = module.aurora_postgres_cluster.cluster_identifier
-  description = "Aurora cluster Identifier"
+  description = "Aurora Postgres cluster Identifier"
 }
 
-output "cluster_arn" {
+output "aurora_postgres_cluster_arn" {
   value       = module.aurora_postgres_cluster.arn
-  description = "Amazon Resource Name (ARN) of the Aurora cluster"
+  description = "Amazon Postgres cluster ARN"
 }
 
-output "cluster_endpoint" {
+output "aurora_postgres_cluster_endpoint" {
   value       = module.aurora_postgres_cluster.endpoint
-  description = "Aurora cluster endpoint"
+  description = "Aurora Postgres cluster endpoint"
 }
 
-output "reader_endpoint" {
+output "aurora_postgres_reader_endpoint" {
   value       = module.aurora_postgres_cluster.reader_endpoint
-  description = "Aurora cluster reader endpoint"
+  description = "Aurora Postgres cluster reader endpoint"
 }
 
 output "bucket_id" {
@@ -78,12 +78,12 @@ output "dms_vpc_management_role_arn" {
   description = "DMS VPC management role ARN"
 }
 
-output "replication_instance_id" {
+output "dms_replication_instance_id" {
   value       = module.dms_replication_instance.replication_instance_id
   description = "DMS replication instance ID"
 }
 
-output "replication_instance_arn" {
+output "dms_replication_instance_arn" {
   value       = module.dms_replication_instance.replication_instance_arn
   description = "DMS replication instance ARN"
 }
@@ -93,12 +93,37 @@ output "dms_replication_instance_event_subscription_arn" {
   description = "DMS replication instance event subscription ARN"
 }
 
-output "endpoint_id" {
+output "dms_aurora_postgres_endpoint_id" {
   value       = module.dms_endpoint_aurora_postgres.endpoint_id
   description = "DMS source endpoint ID for the Aurora Postgres cluster"
 }
 
-output "endpoint_arn" {
+output "dms_aurora_postgres_endpoint_arn" {
   value       = module.dms_endpoint_aurora_postgres.endpoint_arn
   description = "DMS source endpoint ARN for the Aurora Postgres cluster"
+}
+
+output "dms_s3_bucket_endpoint_id" {
+  value       = module.dms_endpoint_aurora_postgres.endpoint_id
+  description = "DMS target endpoint ID for the S3 bucket"
+}
+
+output "dms_s3_bucket_endpoint_arn" {
+  value       = module.dms_endpoint_aurora_postgres.endpoint_arn
+  description = "DMS target endpoint ARN for the S3 bucket"
+}
+
+output "dms_replication_task_id" {
+  value       = module.dms_replication_task.replication_task_id
+  description = "DMS replication task ID"
+}
+
+output "dms_replication_task_arn" {
+  value       = module.dms_replication_task.replication_task_arn
+  description = "DMS replication task ARN"
+}
+
+output "dms_replication_task_event_subscription_arn" {
+  value       = module.dms_replication_task_event_subscription.event_subscription_arn
+  description = "DMS replication task event subscription ARN"
 }

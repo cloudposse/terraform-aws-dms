@@ -1,0 +1,24 @@
+{
+  "rules": [
+    {
+      "rule-type": "selection",
+      "rule-id": "1",
+      "rule-name": "include_all_tables_in_public_schema",
+      "object-locator": {
+        "schema-name": "public",
+        "table-name": "%"
+      },
+      "rule-action": "include"
+    },
+    {
+      "rule-type": "selection",
+      "rule-id": "2",
+      "rule-name": "exclude_test_tables_in_public_schema",
+      "object-locator": {
+        "schema-name": "public",
+        "table-name": "test_%"
+      },
+      "rule-action": "exclude"
+    }
+  ]
+}
