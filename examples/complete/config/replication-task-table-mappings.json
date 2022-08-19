@@ -5,7 +5,7 @@
       "rule-id": "1",
       "rule-name": "1",
       "object-locator": {
-        "schema-name": "public",
+        "schema-name": "%",
         "table-name": "%"
       },
       "rule-action": "include"
@@ -15,7 +15,7 @@
       "rule-id": "2",
       "rule-name": "2",
       "object-locator": {
-        "schema-name": "public",
+        "schema-name": "%",
         "table-name": "test_%"
       },
       "rule-action": "exclude"
