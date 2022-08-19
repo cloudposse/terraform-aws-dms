@@ -91,3 +91,26 @@ module "dms_iam" {
 
   context = module.this.context
 }
+
+module "dms_replication_instance" {
+  source = "../../modules/dms-replication-instance"
+
+  engine_version               = "3.4.3"
+  replication_instance_class   = "dms.t2.micro"
+  allocated_storage            = 10
+  apply_immediately            = true
+  auto_minor_version_upgrade   = true
+  allow_major_version_upgrade  = false
+  multi_az                     = false
+  publicly_accessible          = false
+  preferred_maintenance_window = "sun:10:30-sun:14:30"
+  vpc_security_group_ids       = [local.security_group_id]
+  subnet_ids                   = local.subnet_ids
+
+  context = module.this.context
+
+  depends_on = [
+    # The required DMS roles must be present before replication instances are provisioned
+    module.dms_iam
+  ]
+}

@@ -77,3 +77,13 @@ output "dms_vpc_management_role_arn" {
   value       = module.dms_iam.dms_vpc_management_role_arn
   description = "DMS VPC management role ARN"
 }
+
+output "replication_instance_id" {
+  value       = module.dms_replication_instance.replication_instance_id
+  description = "DMS replication instance ID"
+}
+
+output "replication_instance_arn" {
+  value       = module.dms_replication_instance.replication_instance_arn
+  description = "DMS replication instance ARN"
+}

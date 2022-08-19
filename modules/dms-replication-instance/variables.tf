@@ -19,7 +19,7 @@ variable "auto_minor_version_upgrade" {
 variable "allow_major_version_upgrade" {
   type        = bool
   description = "Indicates that major version upgrades are allowed"
-  default     = true
+  default     = false
 }
 
 variable "availability_zone" {
@@ -30,7 +30,7 @@ variable "availability_zone" {
 
 variable "engine_version" {
   type        = string
-  description = "The engine version number of the replication instance"
+  description = "The engine version of the replication instance"
 }
 
 variable "kms_key_arn" {
