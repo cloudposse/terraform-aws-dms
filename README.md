@@ -414,6 +414,7 @@ For additional context, refer to some of these links.
 - [Troubleshoot AWS DMS failures](https://aws.amazon.com/premiumsupport/knowledge-center/dms-endpoint-connectivity-failures) - How can I troubleshoot AWS DMS endpoint connectivity failures?
 - [Application Migration with AWS](https://catalog.us-east-1.prod.workshops.aws/workshops/c6bdf8dc-d2b2-4dbd-b673-90836e954745/en-US) - Application Migration with AWS workshop
 - [Using a PostgreSQL database as an AWS DMS source](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html) - Using a PostgreSQL database as an AWS DMS source
+- [Troubleshooting migration tasks in Amazon Database Migration Service](https://docs.amazonaws.cn/en_us/dms/latest/userguide/CHAP_Troubleshooting.html) - Troubleshooting migration tasks in Amazon Database Migration Service
 
 
 ## Help

@@ -55,6 +55,9 @@ references:
   - name: Using a PostgreSQL database as an AWS DMS source
     description: Using a PostgreSQL database as an AWS DMS source
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html
+  - name: Troubleshooting migration tasks in Amazon Database Migration Service
+    description: Troubleshooting migration tasks in Amazon Database Migration Service
+    url: https://docs.amazonaws.cn/en_us/dms/latest/userguide/CHAP_Troubleshooting.html
 
 # Short description of this project
 description: |-
