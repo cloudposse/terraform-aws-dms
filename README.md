@@ -32,7 +32,7 @@ Terraform modules for provisioning and managing AWS [DMS](https://aws.amazon.com
 
 The following DMS resources are supported:
 
-  - [IAM Role for DMS](modules/dms-iam)
+  - [IAM Roles for DMS](modules/dms-iam)
   - [DMS Endpoints](modules/dms-endpoint)
   - [DMS Replication Instances](modules/dms-replication-instance)
   - [DMS Replication Tasks](modules/dms-replication-task)
