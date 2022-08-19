@@ -18,6 +18,8 @@ module "s3_bucket" {
 # https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-dms-target/
 # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html
 data "aws_iam_policy_document" "dms_assume_role" {
+  count = local.enabled ? 1 : 0
+
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -32,6 +34,8 @@ data "aws_iam_policy_document" "dms_assume_role" {
 }
 
 data "aws_iam_policy_document" "s3" {
+  count = local.enabled ? 1 : 0
+
   statement {
     actions = [
       "s3:PutObject",
@@ -57,17 +61,23 @@ data "aws_iam_policy_document" "s3" {
 }
 
 resource "aws_iam_policy" "s3" {
+  count = local.enabled ? 1 : 0
+
   name   = module.this.id
-  policy = data.aws_iam_policy_document.s3.json
+  policy = join("", data.aws_iam_policy_document.s3.*.json)
 }
 
 resource "aws_iam_role" "s3" {
+  count = local.enabled ? 1 : 0
+
   name               = module.this.id
-  assume_role_policy = data.aws_iam_policy_document.dms_assume_role.json
+  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role.*.json)
   tags               = module.this.tags
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
-  policy_arn = aws_iam_policy.s3.arn
-  role       = aws_iam_role.s3.name
+  count = local.enabled ? 1 : 0
+
+  policy_arn = join("", aws_iam_policy.s3.*.arn)
+  role       = join("", aws_iam_role.s3.*.name)
 }
