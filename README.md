@@ -202,9 +202,9 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   
     acl                          = "private"
     versioning_enabled           = false
+    allow_encrypted_uploads_only = false
+    allow_ssl_requests_only      = false
     force_destroy                = true
-    allow_encrypted_uploads_only = true
-    allow_ssl_requests_only      = true
     block_public_acls            = true
     block_public_policy          = true
     ignore_public_acls           = true
