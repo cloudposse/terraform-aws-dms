@@ -148,7 +148,7 @@
     "ApplyErrorFailOnTruncationDdl": false,
     "FullLoadIgnoreConflicts": true,
     "FailOnTransactionConsistencyBreached": false,
-    "FailOnNoTablesCaptured": true
+    "FailOnNoTablesCaptured": false
   },
   "ChangeProcessingTuning": {
     "BatchApplyPreserveTransaction": true,
