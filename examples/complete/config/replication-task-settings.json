@@ -129,10 +129,10 @@
   "ErrorBehavior": {
     "DataErrorPolicy": "LOG_ERROR",
     "DataTruncationErrorPolicy": "LOG_ERROR",
-    "DataErrorEscalationPolicy": "LOG_ERROR",
+    "DataErrorEscalationPolicy": "SUSPEND_TABLE",
     "DataErrorEscalationCount": 0,
-    "TableErrorPolicy": "LOG_ERROR",
-    "TableErrorEscalationPolicy": "LOG_ERROR",
+    "TableErrorPolicy": "SUSPEND_TABLE",
+    "TableErrorEscalationPolicy": "STOP_TASK",
     "TableErrorEscalationCount": 0,
     "RecoverableErrorCount": -1,
     "RecoverableErrorInterval": 5,
