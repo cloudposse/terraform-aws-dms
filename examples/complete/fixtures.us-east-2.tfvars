@@ -5,3 +5,15 @@ namespace = "eg"
 environment = "ue2"
 
 stage = "test"
+
+name = "dms"
+
+availability_zones = ["us-east-2a", "us-east-2b"]
+
+admin_user = "admin"
+
+admin_password = "admin_password"
+
+database_name = "postgres"
+
+database_port = 5432
