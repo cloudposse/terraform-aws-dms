@@ -21,10 +21,10 @@ module "dms_replication_instance" {
   apply_immediately            = true
   auto_minor_version_upgrade   = true
   allow_major_version_upgrade  = false
-  multi_az                     = false
+  multi_az                     = true
   publicly_accessible          = false
   preferred_maintenance_window = "sun:10:30-sun:14:30"
-  vpc_security_group_ids       = [local.security_group_id]
+  vpc_security_group_ids       = [local.security_group_id, module.aurora_postgres_cluster.security_group_id]
   subnet_ids                   = local.subnet_ids
 
   context = module.this.context
