@@ -58,6 +58,9 @@ references:
   - name: Troubleshooting migration tasks in Amazon Database Migration Service
     description: Troubleshooting migration tasks in Amazon Database Migration Service
     url: https://docs.amazonaws.cn/en_us/dms/latest/userguide/CHAP_Troubleshooting.html
+  - name: Troubleshoot AWS DMS endpoint connectivity failures
+    description: How can I troubleshoot AWS DMS endpoint connectivity failures?
+    url: https://aws.amazon.com/premiumsupport/knowledge-center/dms-endpoint-connectivity-failures
 
 # Short description of this project
 description: |-
