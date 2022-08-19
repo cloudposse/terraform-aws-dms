@@ -29,7 +29,7 @@ module "dms_replication_instance" {
   context = module.this.context
 
   depends_on = [
-    # The required DMS roles must be present before replication instances are provisioned
+    # The required DMS roles must be present before replication instances can be provisioned
     module.dms_iam
   ]
 }
