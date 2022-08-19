@@ -163,7 +163,6 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     vpc_id                               = module.vpc.vpc_id
     subnets                              = module.subnets.private_subnet_ids
     security_groups                      = [module.vpc.vpc_default_security_group_id]
-    allocated_storage                    = 10
     deletion_protection                  = false
     autoscaling_enabled                  = false
     storage_encrypted                    = false
@@ -285,6 +284,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source_ids                 = [module.dms_replication_instance.replication_instance_id]
     sns_topic_arn              = module.sns_topic.sns_topic_arn
   
+    attributes = ["instance"]
     context = module.this.context
   }
   
@@ -299,6 +299,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source_ids                 = [module.dms_replication_task.replication_task_id]
     sns_topic_arn              = module.sns_topic.sns_topic_arn
   
+    attributes = ["task"]
     context = module.this.context
   }
 ```

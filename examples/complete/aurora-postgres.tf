@@ -15,7 +15,6 @@ module "aurora_postgres_cluster" {
   vpc_id                               = local.vpc_id
   subnets                              = local.subnet_ids
   security_groups                      = [local.security_group_id]
-  allocated_storage                    = 10
   deletion_protection                  = false
   autoscaling_enabled                  = false
   storage_encrypted                    = false

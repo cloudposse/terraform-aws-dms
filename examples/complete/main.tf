@@ -17,7 +17,6 @@ module "dms_replication_instance" {
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html
   engine_version               = "3.4.7"
   replication_instance_class   = "dms.t2.micro"
-  allocated_storage            = 10
   apply_immediately            = true
   auto_minor_version_upgrade   = true
   allow_major_version_upgrade  = false
@@ -33,31 +32,6 @@ module "dms_replication_instance" {
     # The required DMS roles must be present before replication instances can be provisioned
     module.dms_iam
   ]
-}
-
-module "dms_replication_instance_event_subscription" {
-  source = "../../modules/dms-event-subscription"
-
-  event_subscription_enabled = true
-  source_type                = "replication-instance"
-  source_ids                 = [module.dms_replication_instance.replication_instance_id]
-  sns_topic_arn              = module.sns_topic.sns_topic_arn
-
-  event_categories = [
-    "availability",
-    "creation",
-    "deletion",
-    "failover",
-    "failure",
-    "low storage",
-    "maintenance",
-    "notification",
-    "read replica",
-    "recovery",
-    "restoration"
-  ]
-
-  context = module.this.context
 }
 
 module "dms_endpoint_aurora_postgres" {
@@ -122,6 +96,23 @@ module "dms_replication_task" {
   context = module.this.context
 }
 
+module "dms_replication_instance_event_subscription" {
+  source = "../../modules/dms-event-subscription"
+
+  event_subscription_enabled = true
+  source_type                = "replication-instance"
+  source_ids                 = [module.dms_replication_instance.replication_instance_id]
+  sns_topic_arn              = module.sns_topic.sns_topic_arn
+
+  event_categories = [
+    "creation",
+    "failure"
+  ]
+
+  attributes = ["instance"]
+  context    = module.this.context
+}
+
 module "dms_replication_task_event_subscription" {
   source = "../../modules/dms-event-subscription"
 
@@ -135,5 +126,6 @@ module "dms_replication_task_event_subscription" {
     "failure"
   ]
 
-  context = module.this.context
+  attributes = ["task"]
+  context    = module.this.context
 }
