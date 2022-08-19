@@ -6,7 +6,7 @@ variable "event_subscription_enabled" {
 
 variable "event_categories" {
   type        = list(string)
-  description = "List of event categories to listen for"
+  description = "List of event categories to listen for. See https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dms/describe-event-categories.html for more details"
   default     = null
 }
 

@@ -104,8 +104,14 @@ module "dms_replication_instance_event_subscription" {
   source_ids                 = [module.dms_replication_instance.replication_instance_id]
   sns_topic_arn              = module.sns_topic.sns_topic_arn
 
+  # https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dms/describe-event-categories.html
   event_categories = [
+    "low storage",
+    "configuration change",
+    "maintenance",
+    "deletion",
     "creation",
+    "failover",
     "failure"
   ]
 
@@ -121,7 +127,11 @@ module "dms_replication_task_event_subscription" {
   source_ids                 = [module.dms_replication_task.replication_task_id]
   sns_topic_arn              = module.sns_topic.sns_topic_arn
 
+  # https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dms/describe-event-categories.html
   event_categories = [
+    "configuration change",
+    "state change",
+    "deletion",
     "creation",
     "failure"
   ]

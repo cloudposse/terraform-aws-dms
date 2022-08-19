@@ -279,11 +279,21 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     # version     = "x.x.x"
   
     event_subscription_enabled = true
-    event_categories           = ["creation", "failure"]
     source_type                = "replication-instance"
     source_ids                 = [module.dms_replication_instance.replication_instance_id]
     sns_topic_arn              = module.sns_topic.sns_topic_arn
   
+    # https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dms/describe-event-categories.html
+    event_categories = [
+      "low storage",
+      "configuration change",
+      "maintenance",
+      "deletion",
+      "creation",
+      "failover",
+      "failure"
+    ]
+
     attributes = ["instance"]
     context = module.this.context
   }
@@ -294,10 +304,18 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     # version     = "x.x.x"
   
     event_subscription_enabled = true
-    event_categories           = ["creation", "failure"]
     source_type                = "replication-task"
     source_ids                 = [module.dms_replication_task.replication_task_id]
     sns_topic_arn              = module.sns_topic.sns_topic_arn
+
+    # https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dms/describe-event-categories.html
+    event_categories = [
+      "configuration change",
+      "state change",
+      "deletion",
+      "creation",
+      "failure"
+    ]
   
     attributes = ["task"]
     context = module.this.context
