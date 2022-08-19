@@ -47,3 +47,33 @@ output "bucket_arn" {
   value       = module.s3_bucket.bucket_arn
   description = "Bucket ARN"
 }
+
+output "sns_topic_name" {
+  value       = module.sns_topic.sns_topic_name
+  description = "SNS topic name"
+}
+
+output "sns_topic_id" {
+  value       = module.sns_topic.sns_topic_id
+  description = "SNS topic ID"
+}
+
+output "sns_topic_arn" {
+  value       = module.sns_topic.sns_topic_arn
+  description = "SNS topic ARN"
+}
+
+output "dms_redshift_s3_role_arn" {
+  value       = module.dms_iam.dms_redshift_s3_role_arn
+  description = "DMS Redshift S3 role ARN"
+}
+
+output "dms_cloudwatch_logs_role_arn" {
+  value       = module.dms_iam.dms_cloudwatch_logs_role_arn
+  description = "DMS CloudWatch Logs role ARN"
+}
+
+output "dms_vpc_management_role_arn" {
+  value       = module.dms_iam.dms_vpc_management_role_arn
+  description = "DMS VPC management role ARN"
+}

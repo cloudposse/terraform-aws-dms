@@ -73,3 +73,21 @@ module "s3_bucket" {
 
   context = module.this.context
 }
+
+module "sns_topic" {
+  source  = "cloudposse/sns-topic/aws"
+  version = "0.20.1"
+
+  allowed_aws_services_for_sns_published = ["cloudwatch.amazonaws.com"]
+  sqs_dlq_enabled                        = false
+  fifo_topic                             = false
+  fifo_queue_enabled                     = false
+
+  context = module.this.context
+}
+
+module "dms_iam" {
+  source = "../../modules/dms-iam"
+
+  context = module.this.context
+}
