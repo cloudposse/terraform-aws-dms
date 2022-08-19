@@ -104,12 +104,12 @@ output "dms_aurora_postgres_endpoint_arn" {
 }
 
 output "dms_s3_bucket_endpoint_id" {
-  value       = module.dms_endpoint_aurora_postgres.endpoint_id
+  value       = module.dms_endpoint_s3_bucket.endpoint_id
   description = "DMS target endpoint ID for the S3 bucket"
 }
 
 output "dms_s3_bucket_endpoint_arn" {
-  value       = module.dms_endpoint_aurora_postgres.endpoint_arn
+  value       = module.dms_endpoint_s3_bucket.endpoint_arn
   description = "DMS target endpoint ARN for the S3 bucket"
 }
 

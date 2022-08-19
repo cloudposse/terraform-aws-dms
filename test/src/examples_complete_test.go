@@ -53,6 +53,41 @@ func TestExamplesComplete(t *testing.T) {
 	publicSubnetCidrs := terraform.OutputList(t, terraformOptions, "public_subnet_cidrs")
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, []string{"172.19.96.0/19", "172.19.128.0/19"}, publicSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	auroraPostgresClusterIdentifier := terraform.Output(t, terraformOptions, "aurora_postgres_cluster_identifier")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID, auroraPostgresClusterIdentifier)
+
+	// Run `terraform output` to get the value of an output variable
+	bucketId := terraform.Output(t, terraformOptions, "bucket_id")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID, bucketId)
+
+	// Run `terraform output` to get the value of an output variable
+	dmsAuroraPostgresEndpointId := terraform.Output(t, terraformOptions, "dms_aurora_postgres_endpoint_id")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID+"-source", dmsAuroraPostgresEndpointId)
+
+	// Run `terraform output` to get the value of an output variable
+	dmsReplicationInstanceId := terraform.Output(t, terraformOptions, "dms_replication_instance_id")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID, dmsReplicationInstanceId)
+
+	// Run `terraform output` to get the value of an output variable
+	dmsReplicationTaskId := terraform.Output(t, terraformOptions, "dms_replication_task_id")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID, dmsReplicationTaskId)
+
+	// Run `terraform output` to get the value of an output variable
+	dmsS3BucketEndpointId := terraform.Output(t, terraformOptions, "dms_s3_bucket_endpoint_id")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID+"-target", dmsS3BucketEndpointId)
+
+	// Run `terraform output` to get the value of an output variable
+	snsTopicName := terraform.Output(t, terraformOptions, "sns_topic_name")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "eg-ue2-test-dms-"+randID, snsTopicName)
 }
 
 func TestExamplesCompleteDisabled(t *testing.T) {
