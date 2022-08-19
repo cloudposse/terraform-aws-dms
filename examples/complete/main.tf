@@ -39,7 +39,7 @@ module "dms_endpoint_aurora_postgres" {
 
   endpoint_type                   = "source"
   engine_name                     = "aurora-postgresql"
-  server_name                     = module.aurora_postgres_cluster.reader_endpoint
+  server_name                     = module.aurora_postgres_cluster.endpoint
   database_name                   = var.database_name
   port                            = var.database_port
   username                        = var.admin_user
