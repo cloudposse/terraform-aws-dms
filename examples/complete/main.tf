@@ -3,6 +3,7 @@ locals {
   vpc_id            = module.vpc.vpc_id
   vpc_cidr_block    = module.vpc.vpc_cidr_block
   subnet_ids        = module.subnets.private_subnet_ids
+  route_table_ids   = module.subnets.private_route_table_ids
   security_group_id = module.security_group.id
 }
 

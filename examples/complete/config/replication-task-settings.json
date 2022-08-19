@@ -131,6 +131,7 @@
     "DataTruncationErrorPolicy": "LOG_ERROR",
     "DataErrorEscalationPolicy": "SUSPEND_TABLE",
     "DataErrorEscalationCount": 0,
+    "EventErrorPolicy": "IGNORE",
     "TableErrorPolicy": "SUSPEND_TABLE",
     "TableErrorEscalationPolicy": "STOP_TASK",
     "TableErrorEscalationCount": 0,
