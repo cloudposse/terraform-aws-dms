@@ -40,19 +40,19 @@ func TestExamplesComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
-	workflowName := terraform.Output(t, terraformOptions, "workflow_name")
+	vpcCidr := terraform.Output(t, terraformOptions, "vpc_cidr")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-ue2-test-glue-workflow-"+randID, workflowName)
+	assert.Equal(t, "172.19.0.0/16", vpcCidr)
 
 	// Run `terraform output` to get the value of an output variable
-	jobName := terraform.Output(t, terraformOptions, "job_name")
+	privateSubnetCidrs := terraform.OutputList(t, terraformOptions, "private_subnet_cidrs")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-ue2-test-glue-workflow-"+randID, jobName)
+	assert.Equal(t, []string{"172.19.0.0/19", "172.19.32.0/19"}, privateSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
-	triggerName := terraform.Output(t, terraformOptions, "trigger_name")
+	publicSubnetCidrs := terraform.OutputList(t, terraformOptions, "public_subnet_cidrs")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-ue2-test-glue-workflow-"+randID, triggerName)
+	assert.Equal(t, []string{"172.19.96.0/19", "172.19.128.0/19"}, publicSubnetCidrs)
 }
 
 func TestExamplesCompleteDisabled(t *testing.T) {
@@ -74,7 +74,7 @@ func TestExamplesCompleteDisabled(t *testing.T) {
 		VarFiles: varFiles,
 		Vars: map[string]interface{}{
 			"attributes": attributes,
-			"enabled":    "false",
+			"enabled":    false,
 		},
 	}
 
