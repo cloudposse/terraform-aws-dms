@@ -1,3 +1,13 @@
+# Upgrades to AWS DMS versions 3.4.7 and higher require that you configure AWS DMS to use VPC endpoints or use public routes.
+# This requirement applies to source and target endpoints for these data stores: S3, Kinesis, Secrets Manager, DynamoDB, Amazon Redshift, and OpenSearch Service.
+resource "aws_vpc_endpoint" "s3" {
+  count = local.enabled ? 1 : 0
+
+  vpc_id       = local.vpc_id
+  service_name = "com.amazonaws.${var.region}.s3"
+  tags         = module.this.tags
+}
+
 module "s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
   version = "2.0.3"
