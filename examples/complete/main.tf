@@ -39,10 +39,23 @@ module "dms_replication_instance_event_subscription" {
   source = "../../modules/dms-event-subscription"
 
   event_subscription_enabled = true
-  event_categories           = ["creation", "failure"]
   source_type                = "replication-instance"
   source_ids                 = [module.dms_replication_instance.replication_instance_id]
   sns_topic_arn              = module.sns_topic.sns_topic_arn
+
+  event_categories = [
+    "availability",
+    "creation",
+    "deletion",
+    "failover",
+    "failure",
+    "low storage",
+    "maintenance",
+    "notification",
+    "read replica",
+    "recovery",
+    "restoration"
+  ]
 
   context = module.this.context
 }
@@ -113,10 +126,14 @@ module "dms_replication_task_event_subscription" {
   source = "../../modules/dms-event-subscription"
 
   event_subscription_enabled = true
-  event_categories           = ["creation", "failure"]
   source_type                = "replication-task"
   source_ids                 = [module.dms_replication_task.replication_task_id]
   sns_topic_arn              = module.sns_topic.sns_topic_arn
+
+  event_categories = [
+    "creation",
+    "failure"
+  ]
 
   context = module.this.context
 }

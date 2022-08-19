@@ -6,6 +6,7 @@ module "sns_topic" {
   sqs_dlq_enabled                        = false
   fifo_topic                             = false
   fifo_queue_enabled                     = false
+  encryption_enabled                     = false
 
   context = module.this.context
 }

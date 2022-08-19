@@ -163,7 +163,6 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     vpc_id                               = module.vpc.vpc_id
     subnets                              = module.subnets.private_subnet_ids
     security_groups                      = [module.vpc.vpc_default_security_group_id]
-    storage_type                         = "gp2"
     allocated_storage                    = 10
     deletion_protection                  = false
     autoscaling_enabled                  = false
@@ -270,7 +269,8 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     sqs_dlq_enabled                        = false
     fifo_topic                             = false
     fifo_queue_enabled                     = false
-  
+    encryption_enabled                     = false  
+
     context = module.this.context
   }
   
