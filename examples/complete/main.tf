@@ -83,6 +83,18 @@ module "dms_endpoint_s3_bucket" {
   context    = module.this.context
 }
 
+resource "time_sleep" "wait_for_dms_endpoints" {
+  depends_on = [
+    module.dms_endpoint_aurora_postgres,
+    module.dms_endpoint_s3_bucket
+  ]
+
+  create_duration  = "2m"
+  destroy_duration = "30s"
+}
+
+# `dms_replication_task` will be created (at least) 2 minutes after `dms_endpoint_aurora_postgres` and `dms_endpoint_s3_bucket`
+# `dms_endpoint_aurora_postgres` and `dms_endpoint_s3_bucket` will be destroyed (at least) 30 seconds after `dms_replication_task`
 module "dms_replication_task" {
   source = "../../modules/dms-replication-task"
 
@@ -100,7 +112,8 @@ module "dms_replication_task" {
 
   depends_on = [
     module.dms_endpoint_aurora_postgres,
-    module.dms_endpoint_s3_bucket
+    module.dms_endpoint_s3_bucket,
+    time_sleep.wait_for_dms_endpoints
   ]
 }
 

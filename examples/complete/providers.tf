@@ -5,3 +5,6 @@ provider "aws" {
 provider "awsutils" {
   region = var.region
 }
+
+provider "time" {
+}
