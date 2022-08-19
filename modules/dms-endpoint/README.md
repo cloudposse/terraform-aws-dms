@@ -48,7 +48,7 @@ module "aurora_postgres_cluster" {
   engine_version                       = "13.4"
   cluster_family                       = "aurora-postgresql13"
   cluster_size                         = 1
-  admin_user                           = "admin"
+  admin_user                           = "admin_user"
   admin_password                       = "admin_password"
   db_name                              = "postgres"
   db_port                              = 5432
@@ -77,7 +77,7 @@ module "dms_endpoint_aurora_postgres" {
   server_name                     = module.aurora_postgres_cluster.reader_endpoint
   database_name                   = "postgres"
   port                            = 5432
-  username                        = "admin"
+  username                        = "admin_user"
   password                        = "admin_password"
   extra_connection_attributes     = ""
   secrets_manager_access_role_arn = null

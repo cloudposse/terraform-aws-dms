@@ -10,7 +10,7 @@ name = "dms"
 
 availability_zones = ["us-east-2a", "us-east-2b"]
 
-admin_user = "admin"
+admin_user = "admin_user"
 
 admin_password = "admin_password"
 
