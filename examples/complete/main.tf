@@ -108,7 +108,9 @@ module "dms_replication_task" {
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html
   replication_task_settings = file("${path.module}/config/replication-task-settings.json")
-  table_mappings            = file("${path.module}/config/replication-task-table-mappings.json")
+
+  # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html
+  table_mappings = file("${path.module}/config/replication-task-table-mappings.json")
 
   context = module.this.context
 

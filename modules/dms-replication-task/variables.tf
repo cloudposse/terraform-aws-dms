@@ -39,11 +39,11 @@ variable "target_endpoint_arn" {
 
 variable "table_mappings" {
   type        = string
-  description = "An escaped JSON string that contains the table mappings"
+  description = "An escaped JSON string that contains the table mappings. See https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html for more details"
 }
 
 variable "replication_task_settings" {
   type        = string
-  description = "An escaped JSON string that contains the task settings"
+  description = "An escaped JSON string that contains the task settings. See https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html for more details"
   default     = null
 }
