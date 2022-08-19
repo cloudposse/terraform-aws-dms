@@ -3,10 +3,11 @@
 resource "aws_vpc_endpoint" "s3" {
   count = local.enabled ? 1 : 0
 
-  vpc_endpoint_type = "Gateway"
-  vpc_id            = local.vpc_id
-  service_name      = "com.amazonaws.${var.region}.s3"
-  route_table_ids   = local.route_table_ids
+  vpc_endpoint_type  = "Gateway"
+  vpc_id             = local.vpc_id
+  service_name       = "com.amazonaws.${var.region}.s3"
+  route_table_ids    = local.route_table_ids
+  security_group_ids = [local.security_group_id]
 
   tags = module.this.tags
 }
