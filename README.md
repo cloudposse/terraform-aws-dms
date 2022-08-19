@@ -195,6 +195,12 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     context    = module.this.context
   }
   
+  resource "aws_vpc_endpoint" "s3" {
+    vpc_id       = module.vpc.vpc_id
+    service_name = "com.amazonaws.${var.region}.s3"
+    tags         = module.this.tags
+  }
+
   module "s3_bucket" {
     source  = "cloudposse/s3-bucket/aws"
     # Cloud Posse recommends pinning every module to a specific version

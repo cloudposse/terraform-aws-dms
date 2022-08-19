@@ -59,7 +59,8 @@ module "dms_replication_instance" {
 
   depends_on = [
     # The required DMS roles must be present before replication instances can be provisioned
-    module.dms_iam
+    module.dms_iam,
+    aws_vpc_endpoint.s3
   ]
 }
 
@@ -111,6 +112,12 @@ module "dms_endpoint_aurora_postgres" {
 
   attributes = ["source"]
   context    = module.this.context
+}
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = module.vpc.vpc_id
+  service_name = "com.amazonaws.${var.region}.s3"
+  tags         = module.this.tags
 }
 
 module "s3_bucket" {

@@ -33,7 +33,8 @@ module "dms_replication_instance" {
 
   depends_on = [
     # The required DMS roles must be present before replication instances can be provisioned
-    module.dms_iam
+    module.dms_iam,
+    aws_vpc_endpoint.s3
   ]
 }
 
