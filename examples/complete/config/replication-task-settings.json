@@ -9,7 +9,7 @@
     "InlineLobMaxSize": 0,
     "LoadMaxFileSize": 0,
     "ParallelLoadThreads": 0,
-    "ParallelLoadBufferSize": 100,
+    "ParallelLoadBufferSize": 0,
     "BatchApplyEnabled": false,
     "TaskRecoveryTableEnabled": false,
     "ParallelLoadQueuesPerThread": 0,
