@@ -54,6 +54,10 @@ module "dms_endpoint_aurora_postgres" {
 
   attributes = ["source"]
   context    = module.this.context
+
+  depends_on = [
+    module.aurora_postgres_cluster
+  ]
 }
 
 module "dms_endpoint_s3_bucket" {
@@ -83,9 +87,16 @@ module "dms_endpoint_s3_bucket" {
 
   attributes = ["target"]
   context    = module.this.context
+
+  depends_on = [
+    aws_iam_role.s3,
+    module.s3_bucket
+  ]
 }
 
 resource "time_sleep" "wait_for_dms_endpoints" {
+  count = local.enabled ? 1 : 0
+
   depends_on = [
     module.dms_endpoint_aurora_postgres,
     module.dms_endpoint_s3_bucket
