@@ -19,5 +19,6 @@ module "security_group" {
   allow_all_egress      = true
   rules                 = local.security_group_rules
 
-  context = module.this.context
+  attributes = ["common"]
+  context    = module.this.context
 }
