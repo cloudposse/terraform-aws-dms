@@ -52,7 +52,7 @@ module "dms_replication_instance" {
   multi_az                     = false
   publicly_accessible          = false
   preferred_maintenance_window = "sun:10:30-sun:14:30"
-  vpc_security_group_ids       = [module.vpc.vpc_default_security_group_id]
+  vpc_security_group_ids       = [module.vpc.vpc_default_security_group_id, module.aurora_postgres_cluster.security_group_id]
   subnet_ids                   = module.subnets.private_subnet_ids
 
   context = module.this.context
