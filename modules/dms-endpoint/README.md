@@ -5,6 +5,14 @@ Terraform module to provision DMS Endpoints.
 ## Usage
 
 ```hcl
+module "dms_iam" {
+  source = "cloudposse/dms/aws//modules/dms-iam"
+  # Cloud Posse recommends pinning every module to a specific version
+  # version     = "x.x.x"
+
+  context = module.this.context
+}
+
 module "vpc" {
   source  = "cloudposse/vpc/aws"
   # Cloud Posse recommends pinning every module to a specific version
