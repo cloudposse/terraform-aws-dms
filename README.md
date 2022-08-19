@@ -131,10 +131,10 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     apply_immediately            = true
     auto_minor_version_upgrade   = true
     allow_major_version_upgrade  = false
-    multi_az                     = false
+    multi_az                     = true
     publicly_accessible          = false
     preferred_maintenance_window = "sun:10:30-sun:14:30"
-    vpc_security_group_ids       = [module.vpc.vpc_default_security_group_id]
+    vpc_security_group_ids       = [module.vpc.vpc_default_security_group_id, module.aurora_postgres_cluster.security_group_id]
     subnet_ids                   = module.subnets.private_subnet_ids
   
     context = module.this.context
@@ -411,6 +411,9 @@ For additional context, refer to some of these links.
 
 - [AWS Database Migration Service](https://aws.amazon.com/dms) - AWS Database Migration Service
 - [AWS Database Migration Service Documentation](https://docs.aws.amazon.com/dms/index.html) - AWS Database Migration Service Documentation
+- [Troubleshoot AWS DMS failures](https://aws.amazon.com/premiumsupport/knowledge-center/dms-endpoint-connectivity-failures) - How can I troubleshoot AWS DMS endpoint connectivity failures?
+- [Application Migration with AWS](https://catalog.us-east-1.prod.workshops.aws/workshops/c6bdf8dc-d2b2-4dbd-b673-90836e954745/en-US) - Application Migration with AWS workshop
+- [Using a PostgreSQL database as an AWS DMS source](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html) - Using a PostgreSQL database as an AWS DMS source
 
 
 ## Help
