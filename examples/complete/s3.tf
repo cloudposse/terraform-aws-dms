@@ -70,19 +70,27 @@ data "aws_iam_policy_document" "s3" {
   }
 }
 
+module "s3_label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  attributes = ["s3-access"]
+  context    = module.this.context
+}
+
 resource "aws_iam_policy" "s3" {
   count = local.enabled ? 1 : 0
 
-  name   = module.this.id
+  name   = module.s3_label.id
   policy = join("", data.aws_iam_policy_document.s3.*.json)
 }
 
 resource "aws_iam_role" "s3" {
   count = local.enabled ? 1 : 0
 
-  name               = module.this.id
+  name               = module.s3_label.id
   assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role.*.json)
-  tags               = module.this.tags
+  tags               = module.s3_label.tags
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
