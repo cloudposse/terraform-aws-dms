@@ -1,8 +1,9 @@
 locals {
   enabled           = module.this.enabled
-  security_group_id = module.vpc.vpc_default_security_group_id
   vpc_id            = module.vpc.vpc_id
+  vpc_cidr_block    = module.vpc.vpc_cidr_block
   subnet_ids        = module.subnets.private_subnet_ids
+  security_group_id = module.security_group.id
 }
 
 module "dms_iam" {
@@ -16,7 +17,7 @@ module "dms_replication_instance" {
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html
   engine_version               = "3.4.7"
-  replication_instance_class   = "dms.t2.micro"
+  replication_instance_class   = "dms.t2.small"
   apply_immediately            = true
   auto_minor_version_upgrade   = true
   allow_major_version_upgrade  = false
@@ -96,6 +97,11 @@ module "dms_replication_task" {
   table_mappings            = file("${path.module}/config/replication-task-table-mappings.json")
 
   context = module.this.context
+
+  depends_on = [
+    module.dms_endpoint_aurora_postgres,
+    module.dms_endpoint_s3_bucket
+  ]
 }
 
 module "dms_replication_instance_event_subscription" {

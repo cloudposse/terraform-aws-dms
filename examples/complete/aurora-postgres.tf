@@ -18,10 +18,11 @@ module "aurora_postgres_cluster" {
   deletion_protection                  = false
   autoscaling_enabled                  = false
   storage_encrypted                    = false
-  intra_security_group_traffic_enabled = false
-  skip_final_snapshot                  = true
   enhanced_monitoring_role_enabled     = false
   iam_database_authentication_enabled  = false
+  publicly_accessible                  = false
+  intra_security_group_traffic_enabled = true
+  skip_final_snapshot                  = true
 
   context = module.this.context
 }
