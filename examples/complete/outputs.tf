@@ -87,3 +87,18 @@ output "replication_instance_arn" {
   value       = module.dms_replication_instance.replication_instance_arn
   description = "DMS replication instance ARN"
 }
+
+output "dms_replication_instance_event_subscription_arn" {
+  value       = module.dms_replication_instance_event_subscription.event_subscription_arn
+  description = "DMS replication instance event subscription ARN"
+}
+
+output "endpoint_id" {
+  value       = module.dms_endpoint_aurora_postgres.endpoint_id
+  description = "DMS source endpoint ID for the Aurora Postgres cluster"
+}
+
+output "endpoint_arn" {
+  value       = module.dms_endpoint_aurora_postgres.endpoint_arn
+  description = "DMS source endpoint ARN for the Aurora Postgres cluster"
+}

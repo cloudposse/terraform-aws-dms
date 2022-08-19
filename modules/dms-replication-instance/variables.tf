@@ -30,7 +30,7 @@ variable "availability_zone" {
 
 variable "engine_version" {
   type        = string
-  description = "The engine version of the replication instance"
+  description = "The engine version of the replication instance. See https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html for more details"
 }
 
 variable "kms_key_arn" {

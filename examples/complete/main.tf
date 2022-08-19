@@ -95,7 +95,8 @@ module "dms_iam" {
 module "dms_replication_instance" {
   source = "../../modules/dms-replication-instance"
 
-  engine_version               = "3.4.3"
+  # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html
+  engine_version               = "3.4.7"
   replication_instance_class   = "dms.t2.micro"
   allocated_storage            = 10
   apply_immediately            = true
@@ -113,4 +114,34 @@ module "dms_replication_instance" {
     # The required DMS roles must be present before replication instances are provisioned
     module.dms_iam
   ]
+}
+
+module "dms_replication_instance_event_subscription" {
+  source = "../../modules/dms-event-subscription"
+
+  event_subscription_enabled = true
+  event_categories           = ["creation", "failure"]
+  source_type                = "replication-instance"
+  source_ids                 = [module.dms_replication_instance.replication_instance_id]
+  sns_topic_arn              = module.sns_topic.sns_topic_arn
+
+  context = module.this.context
+}
+
+module "dms_endpoint_aurora_postgres" {
+  source = "../../modules/dms-endpoint"
+
+  endpoint_type                   = "source"
+  engine_name                     = "aurora-postgresql"
+  server_name                     = module.aurora_postgres_cluster.reader_endpoint
+  database_name                   = var.database_name
+  port                            = var.database_port
+  username                        = var.admin_user
+  password                        = var.admin_password
+  extra_connection_attributes     = ""
+  secrets_manager_access_role_arn = null
+  secrets_manager_arn             = null
+  ssl_mode                        = "none"
+
+  context = module.this.context
 }
