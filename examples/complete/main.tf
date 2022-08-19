@@ -49,7 +49,8 @@ module "dms_endpoint_aurora_postgres" {
   secrets_manager_arn             = null
   ssl_mode                        = "none"
 
-  context = module.this.context
+  attributes = ["source"]
+  context    = module.this.context
 }
 
 module "dms_endpoint_s3_bucket" {
@@ -77,7 +78,8 @@ module "dms_endpoint_s3_bucket" {
 
   extra_connection_attributes = ""
 
-  context = module.this.context
+  attributes = ["target"]
+  context    = module.this.context
 }
 
 module "dms_replication_task" {

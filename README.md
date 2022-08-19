@@ -190,8 +190,9 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     secrets_manager_access_role_arn = null
     secrets_manager_arn             = null
     ssl_mode                        = "none"
-  
-    context = module.this.context
+
+    attributes = ["source"]
+    context    = module.this.context
   }
   
   module "s3_bucket" {
@@ -208,10 +209,10 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     block_public_policy          = true
     ignore_public_acls           = true
     restrict_public_buckets      = true
-  
-    context = module.this.context
+
+    context    = module.this.context
   }
-  
+
   module "dms_endpoint_s3_bucket" {
     source = "cloudposse/dms/aws//modules/dms-endpoint"
     # Cloud Posse recommends pinning every module to a specific version
@@ -239,7 +240,8 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   
     extra_connection_attributes = ""
   
-    context = module.this.context
+    attributes = ["target"]
+    context    = module.this.context
   }
   
   module "dms_replication_task" {
