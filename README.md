@@ -171,6 +171,49 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     skip_final_snapshot                  = true
     enhanced_monitoring_role_enabled     = false
     iam_database_authentication_enabled  = false
+
+    cluster_parameters = [
+      {
+        name         = "rds.logical_replication"
+        value        = "1"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "max_wal_senders"
+        value        = "10"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "max_replication_slots"
+        value        = "10"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "wal_sender_timeout"
+        value        = "0"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "max_worker_processes"
+        value        = "8"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "max_logical_replication_workers"
+        value        = "8"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "max_parallel_workers"
+        value        = "8"
+        apply_method = "pending-reboot"
+      },
+      {
+        name         = "max_parallel_workers"
+        value        = "8"
+        apply_method = "pending-reboot"
+      }
+    ]
   
     context = module.this.context
   }
@@ -425,6 +468,7 @@ For additional context, refer to some of these links.
 - [Using a PostgreSQL database as an AWS DMS source](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html) - Using a PostgreSQL database as an AWS DMS source
 - [Troubleshooting migration tasks in Amazon Database Migration Service](https://docs.amazonaws.cn/en_us/dms/latest/userguide/CHAP_Troubleshooting.html) - Troubleshooting migration tasks in Amazon Database Migration Service
 - [Troubleshoot AWS DMS endpoint connectivity failures](https://aws.amazon.com/premiumsupport/knowledge-center/dms-endpoint-connectivity-failures) - How can I troubleshoot AWS DMS endpoint connectivity failures?
+- [Using PostgreSQL logical replication with Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Replication.Logical.html) - Using PostgreSQL logical replication with Aurora
 
 
 ## Help

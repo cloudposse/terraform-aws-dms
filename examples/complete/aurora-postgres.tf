@@ -24,5 +24,48 @@ module "aurora_postgres_cluster" {
   intra_security_group_traffic_enabled = true
   skip_final_snapshot                  = true
 
+  cluster_parameters = [
+    {
+      name         = "rds.logical_replication"
+      value        = "1"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "max_wal_senders"
+      value        = "10"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "max_replication_slots"
+      value        = "10"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "wal_sender_timeout"
+      value        = "0"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "max_worker_processes"
+      value        = "8"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "max_logical_replication_workers"
+      value        = "8"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "max_parallel_workers"
+      value        = "8"
+      apply_method = "pending-reboot"
+    },
+    {
+      name         = "max_parallel_workers"
+      value        = "8"
+      apply_method = "pending-reboot"
+    }
+  ]
+
   context = module.this.context
 }
