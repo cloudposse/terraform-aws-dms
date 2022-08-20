@@ -27,3 +27,9 @@ variable "database_port" {
   type        = number
   description = "Database port"
 }
+
+variable "create_dms_iam_roles" {
+  type        = bool
+  description = "Flag to enable/disable the provisioning of the required DMS IAM roles. The roles should be provisioned only once per account. See https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html for more details"
+  default     = true
+}

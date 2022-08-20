@@ -5,6 +5,16 @@ Terraform module to provision IAM roles required for DMS.
 ## Usage
 
 ```hcl
+# Database Migration Service requires
+# the below IAM Roles to be created before
+# replication instances can be created.
+# The roles should be provisioned only once per account.
+# https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html
+# https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html#CHAP_Security.APIRole
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dms_replication_instance
+#  * dms-vpc-role
+#  * dms-cloudwatch-logs-role
+#  * dms-access-for-endpoint
 module "dms_iam" {
   source = "cloudposse/dms/aws//modules/dms-iam"
   # Cloud Posse recommends pinning every module to a specific version
@@ -14,7 +24,7 @@ module "dms_iam" {
 }
 
 module "vpc" {
-  source  = "cloudposse/vpc/aws"
+  source = "cloudposse/vpc/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -24,7 +34,7 @@ module "vpc" {
 }
 
 module "subnets" {
-  source  = "cloudposse/dynamic-subnets/aws"
+  source = "cloudposse/dynamic-subnets/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -63,3 +73,10 @@ module "dms_replication_instance" {
   ]
 }
 ```
+
+## DMS IAM Roles
+
+Two IAM roles that you need to create are `dms-vpc-role` and `dms-cloudwatch-logs-role`. 
+If you use Amazon Redshift as a target database, you must also create and add the IAM role `dms-access-for-endpoint` to your AWS account. 
+
+See [Creating the IAM roles to use with the AWS CLI and AWS DMS API](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html) for more information.

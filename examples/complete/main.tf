@@ -1,14 +1,27 @@
 locals {
-  enabled           = module.this.enabled
-  vpc_id            = module.vpc.vpc_id
-  vpc_cidr_block    = module.vpc.vpc_cidr_block
-  subnet_ids        = module.subnets.private_subnet_ids
-  route_table_ids   = module.subnets.private_route_table_ids
-  security_group_id = module.security_group.id
+  enabled              = module.this.enabled
+  vpc_id               = module.vpc.vpc_id
+  vpc_cidr_block       = module.vpc.vpc_cidr_block
+  subnet_ids           = module.subnets.private_subnet_ids
+  route_table_ids      = module.subnets.private_route_table_ids
+  security_group_id    = module.security_group.id
+  create_dms_iam_roles = local.enabled && var.create_dms_iam_roles
 }
 
+# Database Migration Service requires
+# the below IAM Roles to be created before
+# replication instances can be created.
+# The roles should be provisioned only once per account.
+# https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html
+# https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html#CHAP_Security.APIRole
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dms_replication_instance
+#  * dms-vpc-role
+#  * dms-cloudwatch-logs-role
+#  * dms-access-for-endpoint
 module "dms_iam" {
   source = "../../modules/dms-iam"
+
+  enabled = local.create_dms_iam_roles
 
   context = module.this.context
 }
