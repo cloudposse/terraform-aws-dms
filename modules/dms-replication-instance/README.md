@@ -43,6 +43,8 @@ module "dms_replication_instance" {
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
+  # If `auto_minor_version_upgrade` is enabled, 
+  # then we should omit the patch part of the version or Terraform will try to revert the version upon detected drift
   engine_version               = "3.4"
   replication_instance_class   = "dms.t2.micro"
   allocated_storage            = 50
