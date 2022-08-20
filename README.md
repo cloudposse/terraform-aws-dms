@@ -200,7 +200,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
       },
       {
         name         = "max_logical_replication_workers"
-        value        = "8"
+        value        = "10"
         apply_method = "pending-reboot"
       },
       {

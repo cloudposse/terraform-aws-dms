@@ -92,7 +92,7 @@ module "aurora_postgres_cluster" {
     },
     {
       name         = "max_logical_replication_workers"
-      value        = "8"
+      value        = "10"
       apply_method = "pending-reboot"
     },
     {
