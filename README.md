@@ -179,11 +179,6 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
         apply_method = "pending-reboot"
       },
       {
-        name         = "max_wal_senders"
-        value        = "10"
-        apply_method = "pending-reboot"
-      },
-      {
         name         = "max_replication_slots"
         value        = "10"
         apply_method = "pending-reboot"
