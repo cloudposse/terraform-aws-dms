@@ -313,15 +313,19 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
   
-    allowed_aws_services_for_sns_published = ["cloudwatch.amazonaws.com"]
     sqs_dlq_enabled                        = false
     fifo_topic                             = false
     fifo_queue_enabled                     = false
     encryption_enabled                     = false  
 
+    allowed_aws_services_for_sns_published = [
+      "cloudwatch.amazonaws.com",
+      "dms.amazonaws.com"
+    ]
+
     context = module.this.context
   }
-  
+
   module "dms_replication_instance_event_subscription" {
     source = "cloudposse/dms/aws//modules/dms-event-subscription"
     # Cloud Posse recommends pinning every module to a specific version
