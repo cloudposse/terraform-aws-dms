@@ -15,7 +15,7 @@ module "subnets" {
   vpc_id               = local.vpc_id
   igw_id               = [module.vpc.igw_id]
   ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
-  nat_gateway_enabled  = true
+  nat_gateway_enabled  = false
   nat_instance_enabled = false
 
   context = module.this.context
