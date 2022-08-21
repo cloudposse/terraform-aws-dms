@@ -119,7 +119,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   
     context = module.this.context
   }
-  
+
   module "dms_replication_instance" {
     source = "cloudposse/dms/aws//modules/dms-replication-instance"
     # Cloud Posse recommends pinning every module to a specific version
@@ -233,13 +233,14 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     attributes = ["source"]
     context    = module.this.context
   }
-  
+
   resource "aws_vpc_endpoint" "s3" {
     vpc_endpoint_type = "Gateway"
     vpc_id            = module.vpc.vpc_id
     service_name      = "com.amazonaws.${var.region}.s3"
     route_table_ids   = module.subnets.private_route_table_ids
-    tags              = module.this.tags
+    
+    tags = module.this.tags
   }
 
   module "s3_bucket" {
@@ -290,7 +291,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     attributes = ["target"]
     context    = module.this.context
   }
-  
+
   module "dms_replication_task" {
     source = "cloudposse/dms/aws//modules/dms-replication-task"
     # Cloud Posse recommends pinning every module to a specific version
@@ -307,7 +308,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   
     context = module.this.context
   }
-  
+
   module "sns_topic" {
     source  = "cloudposse/sns-topic/aws"
     # Cloud Posse recommends pinning every module to a specific version

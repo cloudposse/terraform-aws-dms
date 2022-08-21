@@ -153,9 +153,12 @@ module "dms_endpoint_aurora_postgres" {
 }
 
 resource "aws_vpc_endpoint" "s3" {
-  vpc_id       = module.vpc.vpc_id
-  service_name = "com.amazonaws.${var.region}.s3"
-  tags         = module.this.tags
+  vpc_endpoint_type = "Gateway"
+  vpc_id            = module.vpc.vpc_id
+  service_name      = "com.amazonaws.${var.region}.s3"
+  route_table_ids   = module.subnets.private_route_table_ids
+  
+  tags = module.this.tags
 }
 
 module "s3_bucket" {
@@ -220,7 +223,9 @@ module "dms_replication_task" {
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html
   replication_task_settings = file("${path.module}/config/replication-task-settings.json")
-  table_mappings            = file("${path.module}/config/replication-task-table-mappings.json")
+  
+  # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html
+  table_mappings = file("${path.module}/config/replication-task-table-mappings.json")
 
   context = module.this.context
 }
