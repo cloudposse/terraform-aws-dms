@@ -91,7 +91,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source = "cloudposse/dms/aws//modules/dms-iam"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     context = module.this.context
   }
 
@@ -99,9 +99,9 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source  = "cloudposse/vpc/aws"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     ipv4_primary_cidr_block = "172.19.0.0/16"
-  
+
     context = module.this.context
   }
 
@@ -109,14 +109,14 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source  = "cloudposse/dynamic-subnets/aws"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     availability_zones   = ["us-east-2a", "us-east-2b"]
     vpc_id               = local.vpc_id
     igw_id               = [module.vpc.igw_id]
     ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
     nat_gateway_enabled  = false
     nat_instance_enabled = false
-  
+
     context = module.this.context
   }
 
@@ -124,9 +124,9 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source = "cloudposse/dms/aws//modules/dms-replication-instance"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     engine_version               = "3.4"
-    replication_instance_class   = "dms.t2.micro"
+    replication_instance_class   = "dms.t2.small"
     allocated_storage            = 50
     apply_immediately            = true
     auto_minor_version_upgrade   = true
@@ -136,21 +136,21 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     preferred_maintenance_window = "sun:10:30-sun:14:30"
     vpc_security_group_ids       = [module.vpc.vpc_default_security_group_id, module.aurora_postgres_cluster.security_group_id]
     subnet_ids                   = module.subnets.private_subnet_ids
-  
+
     context = module.this.context
-  
+
     depends_on = [
       # The required DMS roles must be present before replication instances can be provisioned
       module.dms_iam,
       aws_vpc_endpoint.s3
     ]
   }
-  
+
   module "aurora_postgres_cluster" {
     source  = "cloudposse/rds-cluster/aws"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     engine                               = "aurora-postgresql"
     engine_mode                          = "provisioned"
     engine_version                       = "13.4"
@@ -209,15 +209,15 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
         apply_method = "pending-reboot"
       }
     ]
-  
+
     context = module.this.context
   }
-  
+
   module "dms_endpoint_aurora_postgres" {
     source = "cloudposse/dms/aws//modules/dms-endpoint"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     endpoint_type                   = "source"
     engine_name                     = "aurora-postgresql"
     server_name                     = module.aurora_postgres_cluster.reader_endpoint
@@ -239,7 +239,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     vpc_id            = module.vpc.vpc_id
     service_name      = "com.amazonaws.${var.region}.s3"
     route_table_ids   = module.subnets.private_route_table_ids
-    
+
     tags = module.this.tags
   }
 
@@ -247,7 +247,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source  = "cloudposse/s3-bucket/aws"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     acl                          = "private"
     versioning_enabled           = false
     allow_encrypted_uploads_only = false
@@ -265,10 +265,10 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source = "cloudposse/dms/aws//modules/dms-endpoint"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     endpoint_type = "target"
     engine_name   = "s3"
-  
+
     s3_settings = {
       bucket_name                      = module.s3_bucket.bucket_id
       bucket_folder                    = null
@@ -285,9 +285,9 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
       timestamp_column_name            = "timestamp"
       service_access_role_arn          = aws_iam_role.s3.arn
     }
-  
+
     extra_connection_attributes = ""
-  
+
     attributes = ["target"]
     context    = module.this.context
   }
@@ -296,16 +296,16 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source = "cloudposse/dms/aws//modules/dms-replication-task"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     replication_instance_arn = module.dms_replication_instance.replication_instance_arn
     start_replication_task   = true
     migration_type           = "full-load-and-cdc"
     source_endpoint_arn      = module.dms_endpoint_aurora_postgres.endpoint_arn
     target_endpoint_arn      = module.dms_endpoint_s3_bucket.endpoint_arn
-  
+
     replication_task_settings = file("${path.module}/config/replication-task-settings.json")
     table_mappings            = file("${path.module}/config/replication-task-table-mappings.json")
-  
+
     context = module.this.context
   }
 
@@ -313,7 +313,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source  = "cloudposse/sns-topic/aws"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     sqs_dlq_enabled                        = false
     fifo_topic                             = false
     fifo_queue_enabled                     = false
@@ -331,12 +331,12 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     source = "cloudposse/dms/aws//modules/dms-event-subscription"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     event_subscription_enabled = true
     source_type                = "replication-instance"
     source_ids                 = [module.dms_replication_instance.replication_instance_id]
     sns_topic_arn              = module.sns_topic.sns_topic_arn
-  
+
     # https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dms/describe-event-categories.html
     event_categories = [
       "low storage",
@@ -351,12 +351,12 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
     attributes = ["instance"]
     context = module.this.context
   }
-  
+
   module "dms_replication_task_event_subscription" {
     source = "cloudposse/dms/aws//modules/dms-event-subscription"
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
-  
+
     event_subscription_enabled = true
     source_type                = "replication-task"
     source_ids                 = [module.dms_replication_task.replication_task_id]
@@ -370,11 +370,23 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
       "creation",
       "failure"
     ]
-  
+
     attributes = ["task"]
     context = module.this.context
   }
 ```
+
+__NOTE:__  If a replication tasks is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), 
+it can't be destroyed with Terraform (but can be updated). 
+The task needs to be updated/fixed and moved to any other state like "Running", "Stopped", "Starting", "Ready", etc.
+
+You can monitor the progress of your task by checking the task status and by monitoring the task's control table. 
+Task status indicates the condition of an AWS DMS task and its associated resources. 
+It includes such indications as if the task is being created, starting, running, stopped, or failed. 
+It also includes the current state of the tables that the task is migrating, such as if a full load of a table has begun 
+or is in progress and details such as the number of inserts, deletes, and updates have occurred for the table.
+
+Refer to https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status for more information.
 
 
 
@@ -468,6 +480,7 @@ For additional context, refer to some of these links.
 - [Using PostgreSQL logical replication with Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Replication.Logical.html) - Using PostgreSQL logical replication with Aurora
 - [Troubleshooting migration tasks in Amazon Database Migration Service](https://docs.amazonaws.cn/en_us/dms/latest/userguide/CHAP_Troubleshooting.html) - Troubleshooting migration tasks in Amazon Database Migration Service
 - [Troubleshoot AWS DMS endpoint connectivity failures](https://aws.amazon.com/premiumsupport/knowledge-center/dms-endpoint-connectivity-failures) - How can I troubleshoot AWS DMS endpoint connectivity failures?
+- [Monitoring AWS DMS tasks](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html) - Monitoring AWS DMS tasks
 
 
 ## Help

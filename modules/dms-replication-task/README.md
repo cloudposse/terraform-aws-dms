@@ -14,7 +14,7 @@ module "dms_iam" {
 }
 
 module "vpc" {
-  source  = "cloudposse/vpc/aws"
+  source = "cloudposse/vpc/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -24,7 +24,7 @@ module "vpc" {
 }
 
 module "subnets" {
-  source  = "cloudposse/dynamic-subnets/aws"
+  source = "cloudposse/dynamic-subnets/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -44,7 +44,7 @@ module "dms_replication_instance" {
   # version     = "x.x.x"
 
   engine_version               = "3.4"
-  replication_instance_class   = "dms.t2.micro"
+  replication_instance_class   = "dms.t2.small"
   allocated_storage            = 50
   apply_immediately            = true
   auto_minor_version_upgrade   = true
@@ -65,7 +65,7 @@ module "dms_replication_instance" {
 }
 
 module "aurora_postgres_cluster" {
-  source  = "cloudposse/rds-cluster/aws"
+  source = "cloudposse/rds-cluster/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -152,17 +152,19 @@ module "dms_endpoint_aurora_postgres" {
   context    = module.this.context
 }
 
+# Upgrades to AWS DMS versions 3.4.7 and higher require that you configure AWS DMS to use VPC endpoints or use public routes.
+# This requirement applies to source and target endpoints for these data stores: S3, Kinesis, Secrets Manager, DynamoDB, Amazon Redshift, and OpenSearch Service.
 resource "aws_vpc_endpoint" "s3" {
   vpc_endpoint_type = "Gateway"
   vpc_id            = module.vpc.vpc_id
   service_name      = "com.amazonaws.${var.region}.s3"
   route_table_ids   = module.subnets.private_route_table_ids
-  
+
   tags = module.this.tags
 }
 
 module "s3_bucket" {
-  source  = "cloudposse/s3-bucket/aws"
+  source = "cloudposse/s3-bucket/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -223,10 +225,21 @@ module "dms_replication_task" {
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html
   replication_task_settings = file("${path.module}/config/replication-task-settings.json")
-  
+
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html
   table_mappings = file("${path.module}/config/replication-task-table-mappings.json")
 
   context = module.this.context
 }
 ```
+
+## Notes
+
+If a replication tasks is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), it can't be destroyed with Terraform (but can be
+updated). The task needs to be updated/fixed and moved to any other state like "Running", "Stopped", "Starting", "Ready", etc.
+
+You can monitor the progress of your task by checking the task status and by monitoring the task's control table. Task status indicates the condition of an AWS DMS task and its associated
+resources. It includes such indications as if the task is being created, starting, running, stopped, or failed. It also includes the current state of the tables that the task is migrating,
+such as if a full load of a table has begun or is in progress and details such as the number of inserts, deletes, and updates have occurred for the table.
+
+Refer to https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status for more information.

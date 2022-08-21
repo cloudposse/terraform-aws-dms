@@ -46,7 +46,7 @@ module "dms_replication_instance" {
   # If `auto_minor_version_upgrade` is enabled, 
   # then we should omit the patch part of the version or Terraform will try to revert the version upon detected drift
   engine_version               = "3.4"
-  replication_instance_class   = "dms.t2.micro"
+  replication_instance_class   = "dms.t2.small"
   allocated_storage            = 50
   apply_immediately            = true
   auto_minor_version_upgrade   = true
