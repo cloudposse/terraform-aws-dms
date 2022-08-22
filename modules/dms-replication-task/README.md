@@ -235,11 +235,13 @@ module "dms_replication_task" {
 
 ## Notes
 
-If a replication tasks is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), it can't be destroyed with Terraform (but can be
+If a replication task is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), it can't be destroyed with Terraform (but can be
 updated). The task needs to be updated/fixed and moved to any other state like "Running", "Stopped", "Starting", "Ready", etc.
 
-You can monitor the progress of your task by checking the task status and by monitoring the task's control table. Task status indicates the condition of an AWS DMS task and its associated
-resources. It includes such indications as if the task is being created, starting, running, stopped, or failed. It also includes the current state of the tables that the task is migrating,
+You can monitor the progress of your task by checking the task status and by monitoring the task's control table.
+The task status indicates the condition of an AWS DMS task and its
+associated resources. It includes such indications as if the task is being created, starting, running, stopped, or failed.
+It also includes the current state of the tables that the task is migrating,
 such as if a full load of a table has begun or is in progress and details such as the number of inserts, deletes, and updates have occurred for the table.
 
-Refer to https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status for more information.
+Refer to [Monitoring DMS Task Status](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status) for more information.
