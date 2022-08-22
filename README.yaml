@@ -390,7 +390,7 @@ examples: |-
   It also includes the current state of the tables that the task is migrating, such as if a full load of a table has begun 
   or is in progress and details such as the number of inserts, deletes, and updates have occurred for the table.
   
-  Refer to https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status for more information.
+  Refer to [AWS DMS Monitoring Tasks > Task Status](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status) for more information.
 
 # Other files to include in this README from the project folder
 include:
