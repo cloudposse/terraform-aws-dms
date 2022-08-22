@@ -376,7 +376,7 @@ For automated tests of the example using [bats](https://github.com/bats-core/bat
   }
 ```
 
-__NOTE:__  If a replication tasks is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), 
+__NOTE:__  If a replication task is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), 
 it can't be destroyed with Terraform (but can be updated). 
 The task needs to be updated/fixed and moved to any other state like "Running", "Stopped", "Starting", "Ready", etc.
 
@@ -386,7 +386,7 @@ It includes such indications as if the task is being created, starting, running,
 It also includes the current state of the tables that the task is migrating, such as if a full load of a table has begun 
 or is in progress and details such as the number of inserts, deletes, and updates have occurred for the table.
 
-Refer to https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status for more information.
+Refer to [AWS DMS Monitoring Tasks > Task Status](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status) for more information.
 
 
 
