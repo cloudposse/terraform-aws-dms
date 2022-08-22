@@ -380,7 +380,7 @@ examples: |-
     }
   ```
   
-  __NOTE:__  If a replication tasks is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), 
+  __NOTE:__  If a replication task is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), 
   it can't be destroyed with Terraform (but can be updated). 
   The task needs to be updated/fixed and moved to any other state like "Running", "Stopped", "Starting", "Ready", etc.
   
