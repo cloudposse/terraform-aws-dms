@@ -18,7 +18,7 @@ resource "aws_dms_replication_instance" "default" {
   preferred_maintenance_window = var.preferred_maintenance_window
   publicly_accessible          = var.publicly_accessible
   replication_instance_class   = var.replication_instance_class
-  replication_subnet_group_id  = join("", aws_dms_replication_subnet_group.default.*.id)
+  replication_subnet_group_id  = join("", aws_dms_replication_subnet_group.default[*].id)
   vpc_security_group_ids       = var.vpc_security_group_ids
 
   tags = module.this.tags

@@ -1,6 +1,6 @@
 locals {
   enabled   = module.this.enabled
-  partition = join("", data.aws_partition.current.*.partition)
+  partition = join("", data.aws_partition.current[*].partition)
 }
 
 data "aws_partition" "current" {
@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "dms_assume_role" {
 resource "aws_iam_role" "dms_redshift_s3" {
   count = local.enabled ? 1 : 0
 
-  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role.*.json)
+  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role[*].json)
   name               = "dms-access-for-endpoint"
 
   tags = module.this.tags
@@ -44,13 +44,13 @@ resource "aws_iam_role_policy_attachment" "dms_redshift_s3" {
   count = local.enabled ? 1 : 0
 
   policy_arn = "arn:${local.partition}:iam::aws:policy/service-role/AmazonDMSRedshiftS3Role"
-  role       = join("", aws_iam_role.dms_redshift_s3.*.name)
+  role       = join("", aws_iam_role.dms_redshift_s3[*].name)
 }
 
 resource "aws_iam_role" "dms_cloudwatch_logs" {
   count = local.enabled ? 1 : 0
 
-  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role.*.json)
+  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role[*].json)
   name               = "dms-cloudwatch-logs-role"
 
   tags = module.this.tags
@@ -60,13 +60,13 @@ resource "aws_iam_role_policy_attachment" "dms_cloudwatch_logs" {
   count = local.enabled ? 1 : 0
 
   policy_arn = "arn:${local.partition}:iam::aws:policy/service-role/AmazonDMSCloudWatchLogsRole"
-  role       = join("", aws_iam_role.dms_cloudwatch_logs.*.name)
+  role       = join("", aws_iam_role.dms_cloudwatch_logs[*].name)
 }
 
 resource "aws_iam_role" "dms_vpc_management" {
   count = local.enabled ? 1 : 0
 
-  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role.*.json)
+  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role[*].json)
   name               = "dms-vpc-role"
 
   tags = module.this.tags
@@ -76,5 +76,5 @@ resource "aws_iam_role_policy_attachment" "amazon_dms_vpc_management" {
   count = local.enabled ? 1 : 0
 
   policy_arn = "arn:${local.partition}:iam::aws:policy/service-role/AmazonDMSVPCManagementRole"
-  role       = join("", aws_iam_role.dms_vpc_management.*.name)
+  role       = join("", aws_iam_role.dms_vpc_management[*].name)
 }

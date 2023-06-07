@@ -95,7 +95,7 @@ module "dms_endpoint_s3_bucket" {
     include_op_for_full_load         = true
     parquet_timestamp_in_millisecond = true
     timestamp_column_name            = "timestamp"
-    service_access_role_arn          = join("", aws_iam_role.s3.*.arn)
+    service_access_role_arn          = join("", aws_iam_role.s3[*].arn)
   }
 
   extra_connection_attributes = ""
