@@ -13,7 +13,7 @@ resource "aws_vpc_endpoint" "s3" {
 
 module "s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "2.0.3"
+  version = "3.1.2"
 
   acl                          = "private"
   versioning_enabled           = false
@@ -85,7 +85,7 @@ resource "aws_iam_policy" "s3" {
   count = local.enabled ? 1 : 0
 
   name   = module.s3_label.id
-  policy = join("", data.aws_iam_policy_document.s3.*.json)
+  policy = join("", data.aws_iam_policy_document.s3[*].json)
 
   tags = module.s3_label.tags
 }
@@ -94,7 +94,7 @@ resource "aws_iam_role" "s3" {
   count = local.enabled ? 1 : 0
 
   name               = module.s3_label.id
-  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role.*.json)
+  assume_role_policy = join("", data.aws_iam_policy_document.dms_assume_role[*].json)
 
   tags = module.s3_label.tags
 }
@@ -102,6 +102,6 @@ resource "aws_iam_role" "s3" {
 resource "aws_iam_role_policy_attachment" "s3" {
   count = local.enabled ? 1 : 0
 
-  policy_arn = join("", aws_iam_policy.s3.*.arn)
-  role       = join("", aws_iam_role.s3.*.name)
+  policy_arn = join("", aws_iam_policy.s3[*].arn)
+  role       = join("", aws_iam_role.s3[*].name)
 }
