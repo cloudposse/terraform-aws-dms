@@ -3,8 +3,8 @@ terraform {
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      # Using the latest version of the provider since the earlier versions had many issues with DMS replication tasks.
+      source  = "hashicorp/aws"
+      version = ">= 5.0"
       # In particular:
       # https://github.com/hashicorp/terraform-provider-aws/pull/24047
       # https://github.com/hashicorp/terraform-provider-aws/pull/23692

@@ -13,7 +13,7 @@ resource "aws_vpc_endpoint" "s3" {
 
 module "s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "2.0.3"
+  version = "3.1.2"
 
   acl                          = "private"
   versioning_enabled           = false
