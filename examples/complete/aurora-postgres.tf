@@ -4,8 +4,8 @@ module "aurora_postgres_cluster" {
 
   engine                               = "aurora-postgresql"
   engine_mode                          = "provisioned"
-  engine_version                       = "13.4"
-  cluster_family                       = "aurora-postgresql13"
+  engine_version                       = "15.4"
+  cluster_family                       = "aurora-postgresql15"
   cluster_size                         = 1
   admin_user                           = var.admin_user
   admin_password                       = var.admin_password
