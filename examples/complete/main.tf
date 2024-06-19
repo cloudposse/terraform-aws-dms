@@ -147,6 +147,37 @@ module "dms_replication_task" {
   ]
 }
 
+# Similar to a replication task, but this provisions the DMS Serverless replication config resource.
+# A replication instance is NOT needed since it's serverless.
+module "dms_serverless_replication_config" {
+  source = "../../modules/dms-serverless-replication-config"
+
+  replication_type    = "full-load-and-cdc"
+  source_endpoint_arn = module.dms_endpoint_aurora_postgres.endpoint_arn
+  target_endpoint_arn = module.dms_endpoint_s3_bucket.endpoint_arn
+
+  # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.html
+  replication_settings = file("${path.module}/config/replication-task-settings.json")
+  # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html
+  table_mappings = file("${path.module}/config/replication-task-table-mappings.json")
+
+  # Compute & Network Configurations
+  replication_min_capacity_units = 2
+  replication_max_capacity_units = 8
+  vpc_security_group_ids         = [local.security_group_id, module.aurora_postgres_cluster.security_group_id]
+  subnet_ids                     = local.subnet_ids
+
+  context    = module.this.context
+  attributes = ["serverless"]
+
+  depends_on = [
+    module.dms_endpoint_aurora_postgres,
+    module.dms_endpoint_s3_bucket,
+    time_sleep.wait_for_dms_endpoints
+  ]
+}
+
+
 module "dms_replication_instance_event_subscription" {
   source = "../../modules/dms-event-subscription"
 
