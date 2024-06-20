@@ -186,7 +186,7 @@ module "dms_endpoint_s3_bucket" {
   context    = module.this.context
 }
 
-module "dms_serverless_replicationconfig" {
+module "dms_serverless_replication_config" {
   source = "cloudposse/dms/aws//modules/dms-serverless-replication-config"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
