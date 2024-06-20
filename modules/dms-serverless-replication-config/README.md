@@ -186,8 +186,8 @@ module "dms_endpoint_s3_bucket" {
   context    = module.this.context
 }
 
-module "dms_replication_task" {
-  source = "cloudposse/dms/aws//modules/dms-replication-task"
+module "dms_serverless_replicationconfig" {
+  source = "cloudposse/dms/aws//modules/dms-serverless-replication-config"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
@@ -214,4 +214,4 @@ module "dms_replication_task" {
 ## Notes
 
 [AWS DMS Serverless](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.html)
-The initial resource creation may take >20 minutes. Check out this diagram to see the definition of each status in hte lifecycle: [AWS DMS Serverless Components](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.Components.html)
+The initial resource creation may take >20 minutes, especially if the `start_replication` variable is set to true, in which case the replication will start upon creation. Check out this diagram to see the definition of each status in the lifecycle: [AWS DMS Serverless Components](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.Components.html)

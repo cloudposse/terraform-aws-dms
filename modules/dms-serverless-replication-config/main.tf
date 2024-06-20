@@ -15,7 +15,7 @@ resource "aws_dms_replication_config" "default" {
   start_replication             = var.start_replication
 
   compute_config {
-    vpc_security_group_ids       = var.vpc_security_group_ids # required in the main
+    vpc_security_group_ids       = var.vpc_security_group_ids
     replication_subnet_group_id  = join("", aws_dms_replication_subnet_group.default[*].id)
     max_capacity_units           = var.replication_max_capacity_units
     min_capacity_units           = var.replication_min_capacity_units
