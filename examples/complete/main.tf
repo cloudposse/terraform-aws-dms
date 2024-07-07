@@ -168,7 +168,7 @@ module "dms_serverless_replication_config" {
   subnet_ids                     = local.subnet_ids
 
   context    = module.this.context
-  attributes = ["serverless"]
+  attributes = ["svrless"]
 
   depends_on = [
     module.dms_endpoint_aurora_postgres,
