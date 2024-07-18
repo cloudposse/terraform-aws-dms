@@ -5,3 +5,4 @@ repository:
   description: Terraform modules for provisioning and managing AWS DMS resources
   homepage: https://cloudposse.com/accelerate
   topics: data, dms, dynamodb, migration, mysql, oracle, postgres, postgresql, s3, sql, sql-server
+
