@@ -24,8 +24,8 @@ resource "aws_dms_endpoint" "default" {
   dynamic "elasticsearch_settings" {
     for_each = var.elasticsearch_settings != null ? [true] : []
     content {
-      endpoint_uri               = lookup(var.elasticsearch_settings, "endpoint_uri")
-      service_access_role_arn    = lookup(var.elasticsearch_settings, "service_access_role_arn")
+      endpoint_uri               = var.elasticsearch_settings["endpoint_uri"]
+      service_access_role_arn    = var.elasticsearch_settings["service_access_role_arn"]
       error_retry_duration       = lookup(var.elasticsearch_settings, "error_retry_duration", null)
       full_load_error_percentage = lookup(var.elasticsearch_settings, "full_load_error_percentage", null)
     }
@@ -34,7 +34,7 @@ resource "aws_dms_endpoint" "default" {
   dynamic "kafka_settings" {
     for_each = var.kafka_settings != null ? [true] : []
     content {
-      broker                         = lookup(var.kafka_settings, "broker")
+      broker                         = var.kafka_settings["broker"]
       include_control_details        = lookup(var.kafka_settings, "include_control_details", null)
       include_null_and_empty         = lookup(var.kafka_settings, "include_null_and_empty", null)
       include_partition_value        = lookup(var.kafka_settings, "include_partition_value", null)
@@ -96,7 +96,7 @@ resource "aws_dms_endpoint" "default" {
   dynamic "s3_settings" {
     for_each = var.s3_settings != null ? [true] : []
     content {
-      bucket_name                                 = lookup(var.s3_settings, "bucket_name")
+      bucket_name                                 = var.s3_settings["bucket_name"]
       add_column_name                             = lookup(var.s3_settings, "add_column_name", null)
       bucket_folder                               = lookup(var.s3_settings, "bucket_folder", null)
       canned_acl_for_objects                      = lookup(var.s3_settings, "canned_acl_for_objects", null)
