@@ -26,8 +26,8 @@ resource "aws_dms_endpoint" "default" {
     content {
       endpoint_uri               = lookup(var.elasticsearch_settings, "endpoint_uri")
       service_access_role_arn    = lookup(var.elasticsearch_settings, "service_access_role_arn")
-      error_retry_duration       = lookup(var.elasticsearch_settings, "error_retry_duration", null)
-      full_load_error_percentage = lookup(var.elasticsearch_settings, "full_load_error_percentage", null)
+      error_retry_duration       = var.elasticsearch_settings["error_retry_duration"]
+      full_load_error_percentage = var.elasticsearch_settings["full_load_error_percentage"]
     }
   }
 
@@ -35,61 +35,61 @@ resource "aws_dms_endpoint" "default" {
     for_each = var.kafka_settings != null ? [true] : []
     content {
       broker                         = lookup(var.kafka_settings, "broker")
-      include_control_details        = lookup(var.kafka_settings, "include_control_details", null)
-      include_null_and_empty         = lookup(var.kafka_settings, "include_null_and_empty", null)
-      include_partition_value        = lookup(var.kafka_settings, "include_partition_value", null)
-      include_table_alter_operations = lookup(var.kafka_settings, "include_table_alter_operations", null)
-      include_transaction_details    = lookup(var.kafka_settings, "include_transaction_details", null)
-      message_format                 = lookup(var.kafka_settings, "message_format", null)
-      message_max_bytes              = lookup(var.kafka_settings, "message_max_bytes", null)
-      no_hex_prefix                  = lookup(var.kafka_settings, "no_hex_prefix", null)
-      partition_include_schema_table = lookup(var.kafka_settings, "partition_include_schema_table", null)
-      sasl_password                  = lookup(var.kafka_settings, "sasl_password", null)
-      sasl_username                  = lookup(var.kafka_settings, "sasl_username", null)
-      security_protocol              = lookup(var.kafka_settings, "security_protocol", null)
-      ssl_ca_certificate_arn         = lookup(var.kafka_settings, "ssl_ca_certificate_arn", null)
-      ssl_client_certificate_arn     = lookup(var.kafka_settings, "ssl_client_certificate_arn", null)
-      ssl_client_key_arn             = lookup(var.kafka_settings, "ssl_client_key_arn", null)
-      ssl_client_key_password        = lookup(var.kafka_settings, "ssl_client_key_password", null)
-      topic                          = lookup(var.kafka_settings, "topic", null)
+      include_control_details        = var.kafka_settings["include_control_details"]
+      include_null_and_empty         = var.kafka_settings["include_null_and_empty"]
+      include_partition_value        = var.kafka_settings["include_partition_value"]
+      include_table_alter_operations = var.kafka_settings["include_table_alter_operations"]
+      include_transaction_details    = var.kafka_settings["include_transaction_details"]
+      message_format                 = var.kafka_settings["message_format"]
+      message_max_bytes              = var.kafka_settings["message_max_bytes"]
+      no_hex_prefix                  = var.kafka_settings["no_hex_prefix"]
+      partition_include_schema_table = var.kafka_settings["partition_include_schema_table"]
+      sasl_password                  = var.kafka_settings["sasl_password"]
+      sasl_username                  = var.kafka_settings["sasl_username"]
+      security_protocol              = var.kafka_settings["security_protocol"]
+      ssl_ca_certificate_arn         = var.kafka_settings["ssl_ca_certificate_arn"]
+      ssl_client_certificate_arn     = var.kafka_settings["ssl_client_certificate_arn"]
+      ssl_client_key_arn             = var.kafka_settings["ssl_client_key_arn"]
+      ssl_client_key_password        = var.kafka_settings["ssl_client_key_password"]
+      topic                          = var.kafka_settings["topic"]
     }
   }
 
   dynamic "kinesis_settings" {
     for_each = var.kinesis_settings != null ? [true] : []
     content {
-      include_control_details        = lookup(var.kinesis_settings, "include_control_details", null)
-      include_null_and_empty         = lookup(var.kinesis_settings, "include_null_and_empty", null)
-      include_partition_value        = lookup(var.kinesis_settings, "include_partition_value", null)
-      include_table_alter_operations = lookup(var.kinesis_settings, "include_table_alter_operations", null)
-      include_transaction_details    = lookup(var.kinesis_settings, "include_transaction_details", null)
-      message_format                 = lookup(var.kinesis_settings, "message_format", null)
-      partition_include_schema_table = lookup(var.kinesis_settings, "partition_include_schema_table", null)
-      service_access_role_arn        = lookup(var.kinesis_settings, "service_access_role_arn", null)
-      stream_arn                     = lookup(var.kinesis_settings, "stream_arn", null)
+      include_control_details        = var.kinesis_settings["include_control_details"]
+      include_null_and_empty         = var.kinesis_settings["include_null_and_empty"]
+      include_partition_value        = var.kinesis_settings["include_partition_value"]
+      include_table_alter_operations = var.kinesis_settings["include_table_alter_operations"]
+      include_transaction_details    = var.kinesis_settings["include_transaction_details"]
+      message_format                 = var.kinesis_settings["message_format"]
+      partition_include_schema_table = var.kinesis_settings["partition_include_schema_table"]
+      service_access_role_arn        = var.kinesis_settings["service_access_role_arn"]
+      stream_arn                     = var.kinesis_settings["stream_arn"]
     }
   }
 
   dynamic "mongodb_settings" {
     for_each = var.mongodb_settings != null ? [true] : []
     content {
-      auth_mechanism      = lookup(var.mongodb_settings, "auth_mechanism", null)
-      auth_source         = lookup(var.mongodb_settings, "auth_source", null)
-      auth_type           = lookup(var.mongodb_settings, "auth_type", null)
-      docs_to_investigate = lookup(var.mongodb_settings, "docs_to_investigate", null)
-      extract_doc_id      = lookup(var.mongodb_settings, "extract_doc_id", null)
-      nesting_level       = lookup(var.mongodb_settings, "nesting_level", null)
+      auth_mechanism      = var.mongodb_settings["auth_mechanism"]
+      auth_source         = var.mongodb_settings["auth_source"]
+      auth_type           = var.mongodb_settings["auth_type"]
+      docs_to_investigate = var.mongodb_settings["docs_to_investigate"]
+      extract_doc_id      = var.mongodb_settings["extract_doc_id"]
+      nesting_level       = var.mongodb_settings["nesting_level"]
     }
   }
 
   dynamic "redshift_settings" {
     for_each = var.redshift_settings != null ? [true] : []
     content {
-      bucket_folder                     = lookup(var.redshift_settings, "bucket_folder", null)
-      bucket_name                       = lookup(var.redshift_settings, "bucket_name", null)
-      encryption_mode                   = lookup(var.redshift_settings, "encryption_mode", null)
-      server_side_encryption_kms_key_id = lookup(var.redshift_settings, "server_side_encryption_kms_key_id", null)
-      service_access_role_arn           = lookup(var.redshift_settings, "service_access_role_arn", null)
+      bucket_folder                     = var.redshift_settings["bucket_folder"]
+      bucket_name                       = var.redshift_settings["bucket_name"]
+      encryption_mode                   = var.redshift_settings["encryption_mode"]
+      server_side_encryption_kms_key_id = var.redshift_settings["server_side_encryption_kms_key_id"]
+      service_access_role_arn           = var.redshift_settings["service_access_role_arn"]
     }
   }
 
@@ -97,41 +97,41 @@ resource "aws_dms_endpoint" "default" {
     for_each = var.s3_settings != null ? [true] : []
     content {
       bucket_name                                 = lookup(var.s3_settings, "bucket_name")
-      add_column_name                             = lookup(var.s3_settings, "add_column_name", null)
-      bucket_folder                               = lookup(var.s3_settings, "bucket_folder", null)
-      canned_acl_for_objects                      = lookup(var.s3_settings, "canned_acl_for_objects", null)
-      cdc_inserts_and_updates                     = lookup(var.s3_settings, "cdc_inserts_and_updates", null)
-      cdc_inserts_only                            = lookup(var.s3_settings, "cdc_inserts_only", null)
-      cdc_max_batch_interval                      = lookup(var.s3_settings, "cdc_max_batch_interval", null)
-      cdc_min_file_size                           = lookup(var.s3_settings, "cdc_min_file_size", null)
-      cdc_path                                    = lookup(var.s3_settings, "cdc_path", null)
-      compression_type                            = lookup(var.s3_settings, "compression_type", null)
-      csv_delimiter                               = lookup(var.s3_settings, "csv_delimiter", null)
-      csv_no_sup_value                            = lookup(var.s3_settings, "csv_no_sup_value", null)
-      csv_null_value                              = lookup(var.s3_settings, "csv_null_value", null)
-      csv_row_delimiter                           = lookup(var.s3_settings, "csv_row_delimiter", null)
-      data_format                                 = lookup(var.s3_settings, "data_format", null)
-      data_page_size                              = lookup(var.s3_settings, "data_page_size", null)
-      date_partition_delimiter                    = lookup(var.s3_settings, "date_partition_delimiter", null)
-      date_partition_enabled                      = lookup(var.s3_settings, "date_partition_enabled", null)
-      date_partition_sequence                     = lookup(var.s3_settings, "date_partition_sequence", null)
-      dict_page_size_limit                        = lookup(var.s3_settings, "dict_page_size_limit", null)
-      enable_statistics                           = lookup(var.s3_settings, "enable_statistics", null)
-      encoding_type                               = lookup(var.s3_settings, "encoding_type", null)
-      encryption_mode                             = lookup(var.s3_settings, "encryption_mode", null)
-      external_table_definition                   = lookup(var.s3_settings, "external_table_definition", null)
-      include_op_for_full_load                    = lookup(var.s3_settings, "include_op_for_full_load", null)
-      max_file_size                               = lookup(var.s3_settings, "max_file_size", null)
-      parquet_timestamp_in_millisecond            = lookup(var.s3_settings, "parquet_timestamp_in_millisecond", null)
-      parquet_version                             = lookup(var.s3_settings, "parquet_version", null)
-      preserve_transactions                       = lookup(var.s3_settings, "preserve_transactions", null)
-      rfc_4180                                    = lookup(var.s3_settings, "rfc_4180", null)
-      row_group_length                            = lookup(var.s3_settings, "row_group_length", null)
-      server_side_encryption_kms_key_id           = lookup(var.s3_settings, "server_side_encryption_kms_key_id", null)
-      service_access_role_arn                     = lookup(var.s3_settings, "service_access_role_arn", null)
-      timestamp_column_name                       = lookup(var.s3_settings, "timestamp_column_name", null)
-      use_task_start_time_for_full_load_timestamp = lookup(var.s3_settings, "use_task_start_time_for_full_load_timestamp", null)
-      use_csv_no_sup_value                        = lookup(var.s3_settings, "use_csv_no_sup_value", null)
+      add_column_name                             = var.s3_settings["add_column_name"]
+      bucket_folder                               = var.s3_settings["bucket_folder"]
+      canned_acl_for_objects                      = var.s3_settings["canned_acl_for_objects"]
+      cdc_inserts_and_updates                     = var.s3_settings["cdc_inserts_and_updates"]
+      cdc_inserts_only                            = var.s3_settings["cdc_inserts_only"]
+      cdc_max_batch_interval                      = var.s3_settings["cdc_max_batch_interval"]
+      cdc_min_file_size                           = var.s3_settings["cdc_min_file_size"]
+      cdc_path                                    = var.s3_settings["cdc_path"]
+      compression_type                            = var.s3_settings["compression_type"]
+      csv_delimiter                               = var.s3_settings["csv_delimiter"]
+      csv_no_sup_value                            = var.s3_settings["csv_no_sup_value"]
+      csv_null_value                              = var.s3_settings["csv_null_value"]
+      csv_row_delimiter                           = var.s3_settings["csv_row_delimiter"]
+      data_format                                 = var.s3_settings["data_format"]
+      data_page_size                              = var.s3_settings["data_page_size"]
+      date_partition_delimiter                    = var.s3_settings["date_partition_delimiter"]
+      date_partition_enabled                      = var.s3_settings["date_partition_enabled"]
+      date_partition_sequence                     = var.s3_settings["date_partition_sequence"]
+      dict_page_size_limit                        = var.s3_settings["dict_page_size_limit"]
+      enable_statistics                           = var.s3_settings["enable_statistics"]
+      encoding_type                               = var.s3_settings["encoding_type"]
+      encryption_mode                             = var.s3_settings["encryption_mode"]
+      external_table_definition                   = var.s3_settings["external_table_definition"]
+      include_op_for_full_load                    = var.s3_settings["include_op_for_full_load"]
+      max_file_size                               = var.s3_settings["max_file_size"]
+      parquet_timestamp_in_millisecond            = var.s3_settings["parquet_timestamp_in_millisecond"]
+      parquet_version                             = var.s3_settings["parquet_version"]
+      preserve_transactions                       = var.s3_settings["preserve_transactions"]
+      rfc_4180                                    = var.s3_settings["rfc_4180"]
+      row_group_length                            = var.s3_settings["row_group_length"]
+      server_side_encryption_kms_key_id           = var.s3_settings["server_side_encryption_kms_key_id"]
+      service_access_role_arn                     = var.s3_settings["service_access_role_arn"]
+      timestamp_column_name                       = var.s3_settings["timestamp_column_name"]
+      use_task_start_time_for_full_load_timestamp = var.s3_settings["use_task_start_time_for_full_load_timestamp"]
+      use_csv_no_sup_value                        = var.s3_settings["use_csv_no_sup_value"]
     }
   }
 
