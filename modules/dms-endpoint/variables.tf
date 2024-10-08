@@ -104,6 +104,12 @@ variable "mongodb_settings" {
   default     = null
 }
 
+variable "postgres_settings" {
+  type        = map(any)
+  description = "Configuration block for Postgres settings"
+  default     = null
+}
+
 variable "redshift_settings" {
   type        = map(any)
   description = "Configuration block for Redshift settings"

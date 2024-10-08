@@ -82,6 +82,15 @@ resource "aws_dms_endpoint" "default" {
     }
   }
 
+  dynamic "postgres_settings" {
+    for_each = var.postgres_settings != null ? [true] : []
+    content {
+      map_boolean_as_boolean       = lookup(var.postgres_settings, "map_boolean_as_boolean", null)
+      map_jsonb_as_clob            = lookup(var.postgres_settings, "map_jsonb_as_clob", null)
+      map_long_varchar_as          = lookup(var.postgres_settings, "map_long_varchar_as", null)
+    }
+  }
+
   dynamic "redshift_settings" {
     for_each = var.redshift_settings != null ? [true] : []
     content {
