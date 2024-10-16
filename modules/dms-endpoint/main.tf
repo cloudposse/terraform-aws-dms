@@ -83,11 +83,24 @@ resource "aws_dms_endpoint" "default" {
   }
 
   dynamic "postgres_settings" {
-    for_each = var.postgres_settings != null ? [true] : []
+    for_each = var.postgres_settings != null ? [var.postgres_settings] : []
     content {
-      map_boolean_as_boolean = lookup(var.postgres_settings, "map_boolean_as_boolean", null)
-      map_jsonb_as_clob      = lookup(var.postgres_settings, "map_jsonb_as_clob", null)
-      map_long_varchar_as    = lookup(var.postgres_settings, "map_long_varchar_as", null)
+      after_connect_script         = postgres_settings.value.after_connect_script
+      babelfish_database_name      = postgres_settings.value.babelfish_database_name
+      capture_ddls                 = postgres_settings.value.capture_ddls
+      database_mode                = postgres_settings.value.database_mode
+      ddl_artifacts_schema         = postgres_settings.value.ddl_artifacts_schema
+      execute_timeout              = postgres_settings.value.execute_timeout
+      fail_tasks_on_lob_truncation = postgres_settings.value.fail_tasks_on_lob_truncation
+      heartbeat_enable             = postgres_settings.value.heartbeat_enable
+      heartbeat_frequency          = postgres_settings.value.heartbeat_frequency
+      heartbeat_schema             = postgres_settings.value.heartbeat_schema
+      map_boolean_as_boolean       = postgres_settings.value.map_boolean_as_boolean
+      map_jsonb_as_clob            = postgres_settings.value.map_jsonb_as_clob
+      map_long_varchar_as          = postgres_settings.value.map_long_varchar_as
+      max_file_size                = postgres_settings.value.max_file_size
+      plugin_name                  = postgres_settings.value.plugin_name
+      slot_name                    = postgres_settings.value.slot_name
     }
   }
 

@@ -105,9 +105,26 @@ variable "mongodb_settings" {
 }
 
 variable "postgres_settings" {
-  type        = map(any)
   description = "Configuration block for Postgres settings"
   default     = null
+  type = object({
+    after_connect_script         = optional(string, null)
+    babelfish_database_name      = optional(string, null)
+    capture_ddls                 = optional(string, null)
+    database_mode                = optional(string, null)
+    ddl_artifacts_schema         = optional(string, "public")
+    execute_timeout              = optional(number, 60)
+    fail_tasks_on_lob_truncation = optional(bool, false)
+    heartbeat_enable             = optional(bool, false)
+    heartbeat_frequency          = optional(number, 5)
+    heartbeat_schema             = optional(string, false)
+    map_boolean_as_boolean       = optional(bool, false)
+    map_jsonb_as_clob            = optional(bool, false)
+    map_long_varchar_as          = optional(bool, false)
+    max_file_size                = optional(number, null)
+    plugin_name                  = optional(string, null)
+    slot_name                    = optional(string, null)
+  })
 }
 
 variable "redshift_settings" {
