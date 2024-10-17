@@ -43,7 +43,7 @@ module "dms_replication_instance" {
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
 
-  engine_version               = "3.4"
+  engine_version               = "3.5"
   replication_instance_class   = "dms.t2.small"
   allocated_storage            = 50
   apply_immediately            = true
