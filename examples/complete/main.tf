@@ -30,7 +30,7 @@ module "dms_replication_instance" {
   source = "../../modules/dms-replication-instance"
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html
-  engine_version             = "3.4"
+  engine_version             = "3.5"
   replication_instance_class = "dms.t2.small"
 
   allocated_storage            = 50
