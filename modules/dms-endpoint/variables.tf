@@ -120,7 +120,7 @@ variable "postgres_settings" {
     heartbeat_schema             = optional(string, false)
     map_boolean_as_boolean       = optional(bool, false)
     map_jsonb_as_clob            = optional(bool, false)
-    map_long_varchar_as          = optional(bool, false)
+    map_long_varchar_as          = optional(string, "wstring")
     max_file_size                = optional(number, null)
     plugin_name                  = optional(string, null)
     slot_name                    = optional(string, null)
