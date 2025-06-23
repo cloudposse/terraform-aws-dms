@@ -132,9 +132,3 @@ variable "redshift_settings" {
   description = "Configuration block for Redshift settings"
   default     = null
 }
-
-variable "s3_settings" {
-  type        = map(any)
-  description = "Configuration block for S3 settings"
-  default     = null
-}

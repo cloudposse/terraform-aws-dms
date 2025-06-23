@@ -75,40 +75,6 @@ module "dms_endpoint_aurora_postgres" {
   ]
 }
 
-module "dms_endpoint_s3_bucket" {
-  source = "../../modules/dms-endpoint"
-
-  endpoint_type = "target"
-  engine_name   = "s3"
-
-  s3_settings = {
-    bucket_name                      = module.s3_bucket.bucket_id
-    bucket_folder                    = null
-    cdc_inserts_only                 = false
-    csv_row_delimiter                = " "
-    csv_delimiter                    = ","
-    data_format                      = "parquet"
-    compression_type                 = "GZIP"
-    date_partition_delimiter         = "NONE"
-    date_partition_enabled           = true
-    date_partition_sequence          = "YYYYMMDD"
-    include_op_for_full_load         = true
-    parquet_timestamp_in_millisecond = true
-    timestamp_column_name            = "timestamp"
-    service_access_role_arn          = join("", aws_iam_role.s3[*].arn)
-  }
-
-  extra_connection_attributes = ""
-
-  attributes = ["target"]
-  context    = module.this.context
-
-  depends_on = [
-    aws_iam_role.s3,
-    module.s3_bucket
-  ]
-}
-
 resource "time_sleep" "wait_for_dms_endpoints" {
   count = local.enabled ? 1 : 0
 
