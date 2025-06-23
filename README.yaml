@@ -67,7 +67,7 @@ references:
 
 # Short description of this project
 description: |-
-  Terraform modules for provisioning and managing AWS [DMS](https://aws.amazon.com/dms/) resources. 
+  Terraform modules for provisioning and managing AWS [DMS](https://aws.amazon.com/dms/) resources.
 
   The following DMS resources are supported:
 
@@ -265,37 +265,6 @@ examples: |2-
       context    = module.this.context
     }
 
-    module "dms_endpoint_s3_bucket" {
-      source = "cloudposse/dms/aws//modules/dms-endpoint"
-      # Cloud Posse recommends pinning every module to a specific version
-      # version     = "x.x.x"
-
-      endpoint_type = "target"
-      engine_name   = "s3"
-
-      s3_settings = {
-        bucket_name                      = module.s3_bucket.bucket_id
-        bucket_folder                    = null
-        cdc_inserts_only                 = false
-        csv_row_delimiter                = " "
-        csv_delimiter                    = ","
-        data_format                      = "parquet"
-        compression_type                 = "GZIP"
-        date_partition_delimiter         = "NONE"
-        date_partition_enabled           = true
-        date_partition_sequence          = "YYYYMMDD"
-        include_op_for_full_load         = true
-        parquet_timestamp_in_millisecond = true
-        timestamp_column_name            = "timestamp"
-        service_access_role_arn          = aws_iam_role.s3.arn
-      }
-
-      extra_connection_attributes = ""
-
-      attributes = ["target"]
-      context    = module.this.context
-    }
-
     module "dms_replication_task" {
       source = "cloudposse/dms/aws//modules/dms-replication-task"
       # Cloud Posse recommends pinning every module to a specific version
@@ -321,7 +290,7 @@ examples: |2-
       sqs_dlq_enabled                        = false
       fifo_topic                             = false
       fifo_queue_enabled                     = false
-      encryption_enabled                     = false  
+      encryption_enabled                     = false
 
       allowed_aws_services_for_sns_published = [
         "cloudwatch.amazonaws.com",
@@ -380,14 +349,14 @@ examples: |2-
     }
   ```
 
-  __NOTE:__  If a replication task is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues), 
-  it can't be destroyed with Terraform (but can be updated). 
+  __NOTE:__  If a replication task is in "Failed" state (for any reason, e.g. network connectivity issues, database table issues, configuration issues),
+  it can't be destroyed with Terraform (but can be updated).
   The task needs to be updated/fixed and moved to any other state like "Running", "Stopped", "Starting", "Ready", etc.
 
-  You can monitor the progress of your task by checking the task status and by monitoring the task's control table. 
-  The task status indicates the condition of an AWS DMS task and its associated resources. 
-  It includes such indications as if the task is being created, starting, running, stopped, or failed. 
-  It also includes the current state of the tables that the task is migrating, such as if a full load of a table has begun 
+  You can monitor the progress of your task by checking the task status and by monitoring the task's control table.
+  The task status indicates the condition of an AWS DMS task and its associated resources.
+  It includes such indications as if the task is being created, starting, running, stopped, or failed.
+  It also includes the current state of the tables that the task is migrating, such as if a full load of a table has begun
   or is in progress and details such as the number of inserts, deletes, and updates have occurred for the table.
 
   Refer to [Monitoring DMS Task Status](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html#CHAP_Tasks.Status) for more information.
