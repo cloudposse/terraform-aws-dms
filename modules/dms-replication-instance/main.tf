@@ -18,14 +18,14 @@ resource "aws_dms_replication_instance" "default" {
   preferred_maintenance_window = var.preferred_maintenance_window
   publicly_accessible          = var.publicly_accessible
   replication_instance_class   = var.replication_instance_class
-  replication_subnet_group_id  = join("", aws_dms_replication_subnet_group.default[*].id)
+  replication_subnet_group_id  = coalesce(var.subnet_group_id, join("", aws_dms_replication_subnet_group.default[*].id))
   vpc_security_group_ids       = var.vpc_security_group_ids
 
   tags = module.this.tags
 }
 
 resource "aws_dms_replication_subnet_group" "default" {
-  count = local.enabled ? 1 : 0
+  count = local.enabled && var.create_subnet_group ? 1 : 0
 
   replication_subnet_group_id          = module.this.id
   replication_subnet_group_description = format("%s DMS replication subnet group", module.this.id)
