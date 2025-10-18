@@ -1,5 +1,6 @@
 locals {
-  enabled = module.this.enabled
+  enabled             = module.this.enabled
+  create_subnet_group = local.enabled && var.subnet_group_id == null
 }
 
 resource "aws_dms_replication_instance" "default" {
@@ -25,7 +26,7 @@ resource "aws_dms_replication_instance" "default" {
 }
 
 resource "aws_dms_replication_subnet_group" "default" {
-  count = local.enabled && var.create_subnet_group ? 1 : 0
+  count = local.create_subnet_group ? 1 : 0
 
   replication_subnet_group_id          = module.this.id
   replication_subnet_group_description = format("%s DMS replication subnet group", module.this.id)

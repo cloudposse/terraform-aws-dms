@@ -78,10 +78,3 @@ variable "subnet_group_id" {
   description = "The human readable ID of the replication subnet group to be used with the replication instance"
   default     = null
 }
-
-variable "create_subnet_group" {
-  type        = bool
-  description = "Whether to create a replication subnet group for the replication instance. If false, `subnet_group_id` must be provided"
-  default     = true
-
-}
