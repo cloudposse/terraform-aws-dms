@@ -10,3 +10,125 @@
 # Import shared configuration used by all modules
 import:
   - https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/.github/atmos/terraform-module.yaml
+
+docs:
+  generate:
+    readme-submodule-dms-endpoint:
+      base-dir: ./
+      input:
+        - readme: "./modules/dms-endpoint/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/dms-endpoint/README.md"
+      terraform:
+        source: ./modules/dms-endpoint
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-dms-event-subscription:
+      base-dir: ./
+      input:
+        - readme: "./modules/dms-event-subscription/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/dms-event-subscription/README.md"
+      terraform:
+        source: ./modules/dms-event-subscription
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-dms-iam:
+      base-dir: ./
+      input:
+        - readme: "./modules/dms-iam/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/dms-iam/README.md"
+      terraform:
+        source: ./modules/dms-iam
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-dms-replication-instance:
+      base-dir: ./
+      input:
+        - readme: "./modules/dms-replication-instance/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/dms-replication-instance/README.md"
+      terraform:
+        source: ./modules/dms-replication-instance
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-dms-replication-task:
+      base-dir: ./
+      input:
+        - readme: "./modules/dms-replication-task/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/dms-replication-task/README.md"
+      terraform:
+        source: ./modules/dms-replication-task
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+
+commands:
+- name: readme
+  steps:
+    - "atmos docs generate readme"
+    - "atmos docs generate readme-submodule-dms-endpoint"
+    - "atmos docs generate readme-submodule-dms-event-subscription"
+    - "atmos docs generate readme-submodule-dms-iam"
+    - "atmos docs generate readme-submodule-dms-replication-instance"
+    - "atmos docs generate readme-submodule-dms-replication-task"
+
+- name: test
+  commands:
+  - name: "init"
+    description: Initialize tests
+    steps:
+      - "make -C test/src init"
+
+  - name: "run"
+    description: Run tests
+    steps:
+      - "cd test/src && go mod tidy"
+      - "cd test/src && go test -v -timeout 60m"
+
+  - name: "clean"
+    description: Clean tests
+    steps:
+      - "make -C test/src clean"
+      - "rm -rf examples/*/.terraform examples/*/.terraform.lock.hcl"
