@@ -118,22 +118,10 @@ resource "aws_dms_endpoint" "default" {
   tags = module.this.tags
 }
 
-module "s3_endpoint_label" {
-  source  = "cloudposse/label/null"
-  version = "0.24.1"
-
-  attributes = ["s3"]
-  context    = module.this.context
-
-  enabled = local.enabled && var.s3_settings != null
-
-  depends_on = [aws_dms_endpoint.default]
-}
-
 resource "aws_dms_s3_endpoint" "default" {
   count = local.enabled && var.engine_name == "s3" ? 1 : 0
 
-  endpoint_id             = module.s3_endpoint_label.id
+  endpoint_id             = module.this.id
   endpoint_type           = var.endpoint_type
   bucket_name             = var.s3_settings.bucket_name
   service_access_role_arn = var.s3_settings.service_access_role_arn
