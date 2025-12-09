@@ -134,7 +134,46 @@ variable "redshift_settings" {
 }
 
 variable "s3_settings" {
-  type        = map(any)
+  type = object({
+    bucket_name                                 = string
+    service_access_role_arn                     = string
+    bucket_folder                               = optional(string, null)
+    cdc_inserts_only                            = optional(bool, false)
+    csv_row_delimiter                           = optional(string, null)
+    csv_delimiter                               = optional(string, null)
+    data_format                                 = optional(string, null)
+    compression_type                            = optional(string, null)
+    date_partition_delimiter                    = optional(string, null)
+    date_partition_enabled                      = optional(bool, false)
+    date_partition_sequence                     = optional(string, null)
+    include_op_for_full_load                    = optional(bool, false)
+    parquet_timestamp_in_millisecond            = optional(bool, false)
+    timestamp_column_name                       = optional(string, null)
+    use_csv_no_sup_value                        = optional(bool, false)
+    use_task_start_time_for_full_load_timestamp = optional(bool, false)
+    add_column_name                             = optional(string, null)
+    dict_page_size_limit                        = optional(number, null)
+    enable_statistics                           = optional(bool, false)
+    encoding_type                               = optional(string, null)
+    encryption_mode                             = optional(string, null)
+    external_table_definition                   = optional(string, null)
+    max_file_size                               = optional(number, null)
+    parquet_version                             = optional(string, null)
+    preserve_transactions                       = optional(bool, false)
+    rfc_4180                                    = optional(bool, false)
+    row_group_length                            = optional(number, null)
+    server_side_encryption_kms_key_id           = optional(string, null)
+    cdc_inserts_and_updates                     = optional(bool, false)
+    cdc_max_batch_interval                      = optional(number, null)
+    cdc_min_file_size                           = optional(number, null)
+    cdc_path                                    = optional(string, null)
+    cdc_path_prefix                             = optional(string, null)
+    cdc_timestamp_column_name                   = optional(string, null)
+    cdc_timestamp_format                        = optional(string, null)
+    cdc_timestamp_type                          = optional(string, null)
+    ignore_header_rows                          = optional(bool, false)
+  })
+  nullable    = true
   description = "Configuration block for S3 settings"
   default     = null
 }
