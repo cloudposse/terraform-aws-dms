@@ -30,8 +30,8 @@ module "dms_replication_instance" {
   source = "../../modules/dms-replication-instance"
 
   # https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html
-  engine_version             = "3.5"
-  replication_instance_class = "dms.t2.small"
+  engine_version             = "3.6.1"
+  replication_instance_class = "dms.t3.small"
 
   allocated_storage            = 50
   apply_immediately            = true
@@ -65,7 +65,7 @@ module "dms_endpoint_aurora_postgres" {
   extra_connection_attributes     = ""
   secrets_manager_access_role_arn = null
   secrets_manager_arn             = null
-  ssl_mode                        = "none"
+  ssl_mode                        = "require"
 
   attributes = ["source"]
   context    = module.this.context
