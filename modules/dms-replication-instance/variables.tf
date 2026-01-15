@@ -72,3 +72,9 @@ variable "subnet_ids" {
   type        = list(string)
   description = "List of the EC2 subnet IDs for the replication subnet group"
 }
+
+variable "subnet_group_id" {
+  type        = string
+  description = "The human readable ID of the replication subnet group to be used with the replication instance"
+  default     = null
+}
